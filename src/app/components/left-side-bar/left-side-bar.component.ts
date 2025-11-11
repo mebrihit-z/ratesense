@@ -53,33 +53,33 @@ export class LeftSideBarComponent {
       expanded: true,
       subsections: [
         { name: 'Key Takeaway', status: 'completed' },
-        { name: 'Pros', status: 'completed' },
-        { name: 'Cons', status: 'completed' },
-        { name: 'Idea Generation Rating', status: 'completed' }
+        { name: 'Pros', status: 'in-progress' },
+        { name: 'Cons', status: 'in-progress' },
+        { name: 'Idea Generation Rating', status: 'in-progress' }
       ]
     },
     {
       number: 2,
       name: 'Implementation',
-      progress: 2,
-      expanded: true,
+      progress: 0,
+      expanded: false,
       subsections: [
-        { name: 'Key Takeaway', status: 'completed' },
-        { name: 'Pros', status: 'completed' },
-        { name: 'Cons', status: 'completed' },
+        { name: 'Key Takeaway', status: 'not-started' },
+        { name: 'Pros', status: 'not-started' },
+        { name: 'Cons', status: 'not-started' },
         { name: 'Implementation Rating', status: 'not-started' }
       ]
     },
     {
       number: 3,
       name: 'Portfolio Construction',
-      progress: 4,
-      expanded: true,
+      progress: 3.5,
+      expanded: false,
       subsections: [
-        { name: 'Key Takeaway', status: 'completed' },
-        { name: 'Pros', status: 'completed' },
-        { name: 'Cons', status: 'completed' },
-        { name: 'Implementation Rating', status: 'completed' }
+        { name: 'Key Takeaway', status: 'in-progress' },
+        { name: 'Pros', status: 'in-progress' },
+        { name: 'Cons', status: 'in-progress' },
+        { name: 'Implementation Rating', status: 'in-progress' }
       ]
     }
   ];
@@ -93,6 +93,11 @@ export class LeftSideBarComponent {
   }
 
   getProgressDots(progress: number): number[] {
-    return Array(5).fill(0).map((_, i) => i < progress ? 1 : 0);
+    // Handle partial progress (e.g., 3.5 means 3 filled, 1 partial, 1 empty)
+    return Array(5).fill(0).map((_, i) => {
+      if (i < Math.floor(progress)) return 1;
+      if (i === Math.floor(progress) && progress % 1 !== 0) return 0.5;
+      return 0;
+    });
   }
 }

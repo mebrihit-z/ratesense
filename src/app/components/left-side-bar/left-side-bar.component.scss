@@ -2,7 +2,7 @@
   height: 100%;
   width: 100%;
   background: #f6f6f6;
-  border-right: 1px solid #dfdfdf;
+  border: 1px solid #dfdfdf;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -36,6 +36,7 @@
     line-height: 22px;
     color: #313131;
     margin: 0;
+    white-space: pre-wrap;
   }
 
   .strategy-subtitle {
@@ -63,10 +64,6 @@
     &:hover {
       opacity: 0.7;
     }
-
-    svg {
-      transform: rotate(180deg);
-    }
   }
 }
 
@@ -84,7 +81,7 @@
   .workflow-steps {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 8px;
   }
 
   .workflow-item {
@@ -96,7 +93,6 @@
     display: flex;
     gap: 12px;
     align-items: center;
-    padding: 4px 0;
   }
 
   .step-indicator {
@@ -105,19 +101,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
     flex-shrink: 0;
-    color: #c0c0c0;
 
-    &.completed {
-      color: #4CAF50;
-      font-size: 12px;
+    .check-icon {
+      width: 15px;
+      height: 15px;
     }
 
-    &.active {
-      color: #000000;
-      font-weight: 900;
-      font-size: 10px;
+    .active-icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    .inactive-icon {
+      width: 16px;
+      height: 16px;
     }
   }
 
@@ -126,8 +124,9 @@
     font-size: 18px;
     font-weight: 400;
     line-height: normal;
-    color: rgba(45, 45, 45, 0.5);
+    color: #2d2d2d;
     margin: 0;
+    white-space: nowrap;
 
     &.active {
       font-weight: 700;
@@ -148,7 +147,7 @@
       top: 0;
       bottom: 0;
       width: 2px;
-      background: linear-gradient(to bottom, #e0e0e0 0%, #e0e0e0 100%);
+      background: #e0e0e0;
     }
   }
 }
@@ -172,10 +171,7 @@
 .tabs {
   display: flex;
   gap: 24px;
-  align-items: flex-start;
-  border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 8px;
-  margin-bottom: 16px;
+  align-items: center;
 
   .tab {
     display: flex;
@@ -187,6 +183,7 @@
     cursor: pointer;
     position: relative;
     border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
 
     &.active {
       border-bottom-color: #475569;
@@ -197,7 +194,7 @@
       }
 
       svg {
-        color: #475569;
+        stroke: #475569;
       }
     }
 
@@ -208,7 +205,8 @@
     svg {
       width: 18px;
       height: 18px;
-      color: #909090;
+      stroke: #909090;
+      flex-shrink: 0;
     }
 
     span {
@@ -217,6 +215,7 @@
       font-weight: 600;
       color: #909090;
       white-space: nowrap;
+      line-height: normal;
     }
   }
 }
@@ -231,7 +230,7 @@
 .chapter-item {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
 
   .chapter-header {
     display: flex;
@@ -253,7 +252,7 @@
     font-family: 'Inter', sans-serif;
     font-size: 16px;
     font-weight: 400;
-    color: #171921;
+    color: #525252;
     margin: 0;
     padding-left: 24px;
     list-style: decimal;
@@ -262,10 +261,11 @@
     li {
       line-height: normal;
       padding-left: 4px;
-    }
 
-    &.active {
-      font-weight: 700;
+      &.bold {
+        font-weight: 700;
+        color: #171921;
+      }
     }
   }
 
@@ -294,6 +294,7 @@
     height: 1px;
     width: 100%;
     background: #dfdfdf;
+    margin-top: 8px;
   }
 }
 
@@ -303,6 +304,7 @@
   flex-direction: column;
   gap: 0;
   padding-left: 0;
+  margin-top: 0;
 
   .subsection-item {
     display: flex;
@@ -311,10 +313,9 @@
     padding: 8px 16px;
     min-height: 28px;
     position: relative;
-    border-bottom: 1px solid #e8e8e8;
 
-    &:last-child {
-      border-bottom: none;
+    &:not(:last-child) {
+      border-bottom: 1px solid #e8e8e8;
     }
 
     .subsection-content {
@@ -326,8 +327,8 @@
       .arrow-icon {
         width: 18px;
         height: 18px;
-        color: rgba(69, 69, 69, 0.6);
-        transform: rotate(-90deg);
+        stroke: rgba(69, 69, 69, 0.6);
+        flex-shrink: 0;
       }
 
       .subsection-name {
@@ -336,6 +337,7 @@
         font-weight: 500;
         color: rgba(69, 69, 69, 0.6);
         line-height: normal;
+        white-space: nowrap;
       }
     }
 
@@ -347,16 +349,15 @@
 
       .status-icon {
         &.completed {
-          color: #4CAF50;
+          stroke: #4CAF50;
         }
 
         &.in-progress {
-          color: #475569;
+          stroke: #475569;
         }
 
         &.not-started {
           fill: #E0E0E0;
-          opacity: 0.3;
         }
       }
     }
