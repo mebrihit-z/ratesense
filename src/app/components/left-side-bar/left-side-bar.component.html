@@ -41,14 +41,14 @@
           class="tab" 
           [class.active]="activeTab === 'chapters'"
           (click)="toggleTab('chapters')">
-          <img src="/icons/book-icon.svg" alt="Chapters" class="chapters-icon">
+          <img src="/icons/book-icon.svg" alt="Chapters" class="tab-icon" [class.active-icon]="activeTab === 'chapters'">
           <span>Chapters</span>
         </button>
         <button 
           class="tab" 
           [class.active]="activeTab === 'sources'"
           (click)="toggleTab('sources')">
-          <img src="/icons/book-icon.svg" alt="Sources" class="sources-icon">
+          <img src="/icons/book-icon.svg" alt="Sources" class="tab-icon" [class.active-icon]="activeTab === 'sources'">
           <span>Sources({{ sourcesCount }})</span>
         </button>
       </div>

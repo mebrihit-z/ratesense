@@ -234,6 +234,18 @@
       flex-shrink: 0;
     }
 
+    .tab-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      filter: brightness(0) saturate(100%) invert(63%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(92%) contrast(87%);
+      transition: filter 0.2s ease;
+
+      &.active-icon {
+        filter: brightness(0) saturate(100%) invert(29%) sepia(8%) saturate(1115%) hue-rotate(176deg) brightness(94%) contrast(90%);
+      }
+    }
+
     span {
       font-family: 'Inter', sans-serif;
       font-size: 16px;
