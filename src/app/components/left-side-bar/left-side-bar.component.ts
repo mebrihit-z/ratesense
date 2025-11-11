@@ -61,7 +61,7 @@ export class LeftSideBarComponent {
     {
       number: 2,
       name: 'Implementation',
-      progress: 0,
+      progress: 1,
       expanded: false,
       subsections: [
         { name: 'Key Takeaway', status: 'completed' },
@@ -94,7 +94,7 @@ export class LeftSideBarComponent {
 
   getProgressDots(progress: number): number[] {
     // Handle partial progress (e.g., 3.5 means 3 filled, 1 partial, 1 empty)
-    return Array(5).fill(0).map((_, i) => {
+    return Array(4).fill(0).map((_, i) => {
       if (i < Math.floor(progress)) return 1;
       if (i === Math.floor(progress) && progress % 1 !== 0) return 0.5;
       return 0;
