@@ -1,5 +1,10 @@
-<div class="right-sidebar-container">
-  <div class="sidebar-content">
+<div class="right-sidebar-container" [class.collapsed]="!isOpen">
+  <!-- Collapsed State Button -->
+  <button *ngIf="!isOpen" class="open-btn" (click)="toggleSidebar()" aria-label="Open sidebar">
+    <img src="/icons/left-panel-close.svg" alt="Open" class="open-icon">
+  </button>
+
+  <div class="sidebar-content" *ngIf="isOpen">
     <!-- Header with tabs -->
     <div class="sidebar-header">
       <div class="tabs-container">
@@ -8,17 +13,12 @@
           class="tab"
           [class.active]="tab.isActive"
           (click)="switchTab(tab.id)">
-          <svg *ngIf="tab.icon === 'sparkle'" width="20" height="20" viewBox="0 0 20 20" fill="none" class="tab-icon">
-            <path d="M10 2L11.5 7.5L17 9L11.5 10.5L10 16L8.5 10.5L3 9L8.5 7.5L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M14 3L14.5 5L16.5 5.5L14.5 6L14 8L13.5 6L11.5 5.5L13.5 5L14 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-          </svg>
-          <svg *ngIf="tab.icon === 'comment'" width="20" height="20" viewBox="0 0 20 20" fill="none" class="tab-icon">
-            <path d="M3 6C3 4.89543 3.89543 4 5 4H15C16.1046 4 17 4.89543 17 6V12C17 13.1046 16.1046 14 15 14H8L4 17V6C4 5.44772 4.44772 5 5 5H15C15.5523 5 16 5.44772 16 6V12C16 12.5523 15.5523 13 15 13H7.5L3 16V6Z" fill="currentColor"/>
-          </svg>
-          <span>{{ tab.label }}</span>
+          <img *ngIf="tab.icon === 'sparkle'" src="/icons/sparkle-icon.svg" alt="Sparkle" class="tab-icon" [class.active-icon]="tab.isActive">
+          <img *ngIf="tab.icon === 'comment'" src="/icons/comment-icon.svg" alt="Comment" class="tab-icon" [class.active-icon]="tab.isActive">
+          <span class="tab-label">{{ tab.label }}</span>
         </button>
       </div>
-      <button class="close-btn" (click)="closePanel()" aria-label="Close panel">
+      <button class="close-btn" (click)="toggleSidebar()" aria-label="Close panel">
         <img src="/icons/right-panel-close.svg" alt="Close" class="close-icon">
       </button>
     </div>

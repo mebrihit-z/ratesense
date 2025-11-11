@@ -16,6 +16,7 @@ interface Tab {
   styleUrl: './right-side-bar.component.scss'
 })
 export class RightSideBarComponent {
+  isOpen = true;
   activeTab: string = 'ai-companion';
   userInput: string = '';
 
@@ -41,6 +42,10 @@ export class RightSideBarComponent {
     });
   }
 
+  toggleSidebar() {
+    this.isOpen = !this.isOpen;
+  }
+
   onSendMessage() {
     if (this.userInput.trim()) {
       console.log('Sending message:', this.userInput);
@@ -55,7 +60,6 @@ export class RightSideBarComponent {
   }
 
   closePanel() {
-    console.log('Close panel clicked');
-    // Handle panel close logic here
+    this.toggleSidebar();
   }
 }

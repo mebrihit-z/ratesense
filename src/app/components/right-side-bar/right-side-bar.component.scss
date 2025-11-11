@@ -5,6 +5,14 @@
   border-left: 1px solid #dfdfdf;
   display: flex;
   flex-direction: column;
+  position: relative;
+  transition: all 0.3s ease;
+
+  &.collapsed {
+    width: 48px;
+    min-width: 48px;
+    padding: 24px 8px 24px 8px;
+  }
 }
 
 .sidebar-content {
@@ -15,10 +23,39 @@
   gap: 16px;
 }
 
+// Open Button (Collapsed State)
+.open-btn {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: block;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  margin-left: auto;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  .open-icon {
+    width: 20px;
+    height: 20px;
+    display: block;
+    transform: rotate(0deg);
+  }
+}
+
 // Header Section
 .sidebar-header {
   display: flex;
-  align-items: center;
+  // align-items: center;
   justify-content: space-between;
   padding: 12px 0;
   border-bottom: 1px solid transparent;
@@ -43,14 +80,14 @@
     color: #525252;
 
     .tab-icon {
-      width: 20px;
-      height: 20px;
+      width: 15px;
+      height: 15px;
       stroke: currentColor;
     }
 
     span {
       font-family: 'Inter', sans-serif;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 600;
       line-height: normal;
       white-space: nowrap;

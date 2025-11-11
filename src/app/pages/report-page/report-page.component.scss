@@ -27,6 +27,11 @@
   app-right-side-bar {
     flex: 0 0 327px;
     overflow-y: auto;
+    transition: flex-basis 0.3s ease;
+
+    &:has(.right-sidebar-container.collapsed) {
+      flex: 0 0 48px;
+    }
   }
 }
 
@@ -43,6 +48,10 @@
     }
 
     app-left-side-bar:has(.sidebar-container.collapsed) {
+      flex: 0 0 48px;
+    }
+
+    app-right-side-bar:has(.right-sidebar-container.collapsed) {
       flex: 0 0 48px;
     }
   }
@@ -62,6 +71,10 @@
     app-left-side-bar:has(.sidebar-container.collapsed) {
       flex: 0 0 48px;
     }
+
+    app-right-side-bar:has(.right-sidebar-container.collapsed) {
+      flex: 0 0 48px;
+    }
   }
 }
 
@@ -77,6 +90,10 @@
     }
 
     app-left-side-bar:has(.sidebar-container.collapsed) {
+      flex: 0 0 48px;
+    }
+
+    app-right-side-bar:has(.right-sidebar-container.collapsed) {
       flex: 0 0 48px;
     }
   }
