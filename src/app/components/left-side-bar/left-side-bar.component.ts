@@ -53,9 +53,9 @@ export class LeftSideBarComponent {
       expanded: true,
       subsections: [
         { name: 'Key Takeaway', status: 'completed' },
-        { name: 'Pros', status: 'in-progress' },
-        { name: 'Cons', status: 'in-progress' },
-        { name: 'Idea Generation Rating', status: 'in-progress' }
+        { name: 'Pros', status: 'completed' },
+        { name: 'Cons', status: 'completed' },
+        { name: 'Idea Generation Rating', status: 'completed' }
       ]
     },
     {
@@ -64,10 +64,10 @@ export class LeftSideBarComponent {
       progress: 0,
       expanded: false,
       subsections: [
-        { name: 'Key Takeaway', status: 'not-started' },
-        { name: 'Pros', status: 'not-started' },
-        { name: 'Cons', status: 'not-started' },
-        { name: 'Implementation Rating', status: 'not-started' }
+        { name: 'Key Takeaway', status: 'completed' },
+        { name: 'Pros', status: 'completed' },
+        { name: 'Cons', status: 'completed' },
+        { name: 'Implementation Rating', status: 'in-progress' }
       ]
     },
     {
@@ -76,10 +76,10 @@ export class LeftSideBarComponent {
       progress: 3.5,
       expanded: false,
       subsections: [
-        { name: 'Key Takeaway', status: 'in-progress' },
-        { name: 'Pros', status: 'in-progress' },
-        { name: 'Cons', status: 'in-progress' },
-        { name: 'Implementation Rating', status: 'in-progress' }
+        { name: 'Key Takeaway', status: 'completed' },
+        { name: 'Pros', status: 'completed' },
+        { name: 'Cons', status: 'completed' },
+        { name: 'Implementation Rating', status: 'completed' }
       ]
     }
   ];

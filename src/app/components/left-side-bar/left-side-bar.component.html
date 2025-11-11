@@ -20,15 +20,9 @@
           <div *ngFor="let step of workflowSteps; let i = index" class="workflow-item">
             <div class="step-row">
               <div class="step-indicator">
-                <svg *ngIf="step.isCompleted" width="15" height="15" viewBox="0 0 15 15" fill="none" class="check-icon">
-                  <path d="M3 7.5L6 10.5L12 4.5" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <svg *ngIf="step.isActive" width="16" height="16" viewBox="0 0 16 16" fill="none" class="active-icon">
-                  <circle cx="8" cy="8" r="8" fill="black"/>
-                </svg>
-                <svg *ngIf="!step.isActive && !step.isCompleted" width="16" height="16" viewBox="0 0 16 16" fill="none" class="inactive-icon">
-                  <circle cx="8" cy="8" r="7" stroke="#E0E0E0" stroke-width="2" fill="none" opacity="0.3"/>
-                </svg>
+                <img *ngIf="step.isCompleted" src="/icons/green-check-mark-icon.svg" alt="Check" class="check-icon">
+                <img *ngIf="step.isActive" src="/icons/active-circle-icon.svg" alt="Check" class="active-icon">
+                <img *ngIf="!step.isActive && !step.isCompleted" src="/icons/inactive-circle-icon.svg" alt="Check" class="inactive-icon">
               </div>
               <p class="step-name" [class.active]="step.isActive">{{ step.name }}</p>
             </div>
@@ -93,40 +87,13 @@
           <div class="subsections" *ngIf="chapter.expanded && chapter.subsections.length > 0">
             <div *ngFor="let subsection of chapter.subsections" class="subsection-item">
               <div class="subsection-content">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" class="arrow-icon">
-                  <path d="M10 6L6 10L10 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                <img src="/icons/arrow-top-left.svg" alt="Arrow" class="arrow-icon">
                 <span class="subsection-name">{{ subsection.name }}</span>
               </div>
               <div class="subsection-status">
-                <svg 
-                  *ngIf="subsection.status === 'completed'" 
-                  width="18" 
-                  height="18" 
-                  viewBox="0 0 18 18" 
-                  fill="none" 
-                  class="status-icon completed">
-                  <circle cx="9" cy="9" r="8" stroke="#4CAF50" stroke-width="1.5"/>
-                  <path d="M6 9L8 11L12 7" stroke="#4CAF50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <svg 
-                  *ngIf="subsection.status === 'in-progress'" 
-                  width="15" 
-                  height="15" 
-                  viewBox="0 0 15 15" 
-                  fill="none" 
-                  class="status-icon in-progress">
-                  <circle cx="7.5" cy="7.5" r="6" stroke="#475569" stroke-width="1.5"/>
-                </svg>
-                <svg 
-                  *ngIf="subsection.status === 'not-started'" 
-                  width="16" 
-                  height="16" 
-                  viewBox="0 0 16 16" 
-                  fill="none" 
-                  class="status-icon not-started">
-                  <circle cx="8" cy="8" r="7" fill="#E0E0E0" opacity="0.3"/>
-                </svg>
+                <img *ngIf="subsection.status === 'completed'"  src="/icons/green-check-mark-icon.svg" alt="In Progress" class="status-icon completed">
+                <img *ngIf="subsection.status === 'in-progress'"  src="/icons/active-circle-icon.svg" alt="In Progress" class="status-icon in-progress">
+                <img *ngIf="subsection.status === 'not-started'"  src="/icons/inactive-circle-icon.svg" alt="In Progress" class="status-icon not-started">
               </div>
             </div>
           </div>
