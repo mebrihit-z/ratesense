@@ -1,0 +1,184 @@
+<div class="report-container">
+  <div class="report-content">
+    <!-- Header -->
+    <div class="report-header">
+      <div class="header-left">
+        <div class="title-section">
+          <div class="title-row">
+            <h1 class="report-title">Research Report on AB's US Equity Strategy</h1>
+            <span class="draft-badge">Draft</span>
+          </div>
+          <p class="subtitle">AB Global Core • Equity</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-secondary">
+          Share
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 1L8 11M8 1L4 5M8 1L12 5M15 11V13C15 14.1046 14.1046 15 13 15H3C1.89543 15 1 14.1046 1 13V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="btn-primary">Save</button>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <div class="toolbar-group">
+          <button class="toolbar-btn">B</button>
+          <button class="toolbar-btn">I</button>
+          <button class="toolbar-btn">U</button>
+          <button class="toolbar-btn">S</button>
+        </div>
+        <div class="toolbar-group font-size">
+          <span>16</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M4 6L8 2L12 6M4 10L8 14L12 10" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="toolbar-group">
+          <button class="toolbar-btn">≡</button>
+          <button class="toolbar-btn">≣</button>
+          <button class="toolbar-btn">≡</button>
+        </div>
+        <div class="toolbar-group">
+          <button class="toolbar-btn">•</button>
+          <button class="toolbar-btn">1.</button>
+        </div>
+        <div class="toolbar-group">
+          <button class="toolbar-btn">💬</button>
+        </div>
+      </div>
+      <button class="btn-inspect">
+        Inspect
+        <span class="inspect-icon">👁</span>
+      </button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="content-wrapper">
+        <div class="document-header">
+          <span>Research Report</span>
+          <span>AB Global Core Equity</span>
+        </div>
+
+        <!-- IDEA Generation Section -->
+        <div class="idea-section">
+          <div class="idea-header">
+            <h2 class="section-title">IDEA GENERATION</h2>
+            <div class="idea-indicators">
+              <span class="indicator"></span>
+              <span class="indicator"></span>
+              <span class="indicator"></span>
+              <span class="indicator"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key Takeaway -->
+        <div class="section-container">
+          <h3 class="section-heading">Key takeaway:</h3>
+          <div class="card">
+            <button class="close-btn" aria-label="Remove">×</button>
+            <p class="card-text">{{ keyTakeaway.text }}</p>
+            <div class="card-footer">
+              <div class="card-meta">
+                <div class="meta-item">
+                  <span class="ai-icon">🤖</span>
+                  <span class="meta-text">by AI</span>
+                </div>
+                <div class="meta-item" *ngIf="keyTakeaway.sources">
+                  <span class="source-icon">📄</span>
+                  <span class="meta-text">{{ keyTakeaway.sources }} Sources</span>
+                </div>
+                <div class="meta-item" *ngIf="keyTakeaway.score">
+                  <div class="score-bars" [class]="'score-' + keyTakeaway.score">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                  </div>
+                  <span class="meta-text">Score</span>
+                </div>
+              </div>
+              <div class="card-date">{{ keyTakeaway.date }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pros and Cons -->
+        <div class="pros-cons-container">
+          <!-- Pros Column -->
+          <div class="column">
+            <h3 class="section-heading">Pros:</h3>
+            <div class="card" *ngFor="let pro of pros">
+              <button class="close-btn" (click)="removeItem(pros, pro.id)" aria-label="Remove">×</button>
+              <ol class="card-list" start="1">
+                <li>{{ pro.text }}</li>
+              </ol>
+              <div class="card-footer">
+                <div class="card-meta">
+                  <div class="meta-item">
+                    <span *ngIf="pro.byAI" class="ai-icon">🤖</span>
+                    <span *ngIf="!pro.byAI" class="avatar">👤</span>
+                    <span class="meta-text">{{ pro.byAI ? 'by AI' : 'by' }}</span>
+                  </div>
+                  <div class="meta-item" *ngIf="pro.sources">
+                    <span class="source-icon">📄</span>
+                    <span class="meta-text">{{ pro.sources }} Source{{ pro.sources > 1 ? 's' : '' }}</span>
+                  </div>
+                  <div class="meta-item" *ngIf="pro.score">
+                    <div class="score-bars" [class]="'score-' + pro.score">
+                      <span class="bar"></span>
+                      <span class="bar"></span>
+                      <span class="bar"></span>
+                    </div>
+                    <span class="meta-text">Score</span>
+                  </div>
+                </div>
+                <div class="card-date">{{ pro.date }}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cons Column -->
+          <div class="column">
+            <h3 class="section-heading">Cons:</h3>
+            <div class="card" *ngFor="let con of cons">
+              <button class="close-btn" (click)="removeItem(cons, con.id)" aria-label="Remove">×</button>
+              <ol class="card-list" start="1">
+                <li>{{ con.text }}</li>
+              </ol>
+              <div class="card-footer">
+                <div class="card-meta">
+                  <div class="meta-item">
+                    <span class="ai-icon">🤖</span>
+                    <span class="meta-text">by AI</span>
+                  </div>
+                  <div class="meta-item" *ngIf="con.sources">
+                    <span class="source-icon">📄</span>
+                    <span class="meta-text">{{ con.sources }} Source{{ con.sources > 1 ? 's' : '' }}</span>
+                  </div>
+                  <div class="meta-item" *ngIf="con.score">
+                    <div class="score-bars" [class]="'score-' + con.score">
+                      <span class="bar"></span>
+                      <span class="bar"></span>
+                      <span class="bar"></span>
+                    </div>
+                    <span class="meta-text">Score</span>
+                  </div>
+                </div>
+                <div class="card-date">{{ con.date }}</div>
+              </div>
+            </div>
+            <button class="btn-add" (click)="addCon()">
+              <span class="add-icon">+</span>
+              <span>Add</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

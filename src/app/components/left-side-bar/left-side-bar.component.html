@@ -1,0 +1,133 @@
+<div class="sidebar-container">
+  <div class="sidebar-content">
+    <!-- Header -->
+    <div class="sidebar-header">
+      <div class="header-info">
+        <h2 class="strategy-title">AB's US Equity Strategy</h2>
+        <p class="strategy-subtitle">AB Global Core</p>
+      </div>
+      <button class="close-btn" aria-label="Close sidebar">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Workflow Overview -->
+    <div class="workflow-section">
+      <div class="workflow-content">
+        <div class="workflow-steps">
+          <div *ngFor="let step of workflowSteps; let i = index" class="workflow-item">
+            <div class="step-row">
+              <div class="step-indicator" [class.completed]="step.isCompleted" [class.active]="step.isActive">
+                <span *ngIf="!step.isActive && !step.isCompleted">○</span>
+                <span *ngIf="step.isCompleted">✓</span>
+                <span *ngIf="step.isActive">●</span>
+              </div>
+              <p class="step-name" [class.active]="step.isActive">{{ step.name }}</p>
+            </div>
+            <div *ngIf="i < workflowSteps.length - 1" class="step-connector"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="divider"></div>
+
+    <!-- Chapters/Sources Section -->
+    <div class="chapters-section">
+      <!-- Tabs -->
+      <div class="tabs">
+        <button 
+          class="tab" 
+          [class.active]="activeTab === 'chapters'"
+          (click)="toggleTab('chapters')">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M3 3H15V15H3V3ZM5 5V13H13V5H5Z" fill="currentColor"/>
+          </svg>
+          <span>Chapters</span>
+        </button>
+        <button 
+          class="tab" 
+          [class.active]="activeTab === 'sources'"
+          (click)="toggleTab('sources')">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M4 2H14V16H4V2ZM6 4V14H12V4H6Z" fill="currentColor"/>
+          </svg>
+          <span>Sources({{ sourcesCount }})</span>
+        </button>
+      </div>
+
+      <!-- Chapters List -->
+      <div class="chapters-list" *ngIf="activeTab === 'chapters'">
+        <div *ngFor="let chapter of chapters" class="chapter-item">
+          <div class="chapter-header" (click)="toggleChapter(chapter)">
+            <div class="chapter-title-section">
+              <ol class="chapter-number" [start]="chapter.number">
+                <li>{{ chapter.name }}</li>
+              </ol>
+            </div>
+            <div class="progress-dots">
+              <span 
+                *ngFor="let dot of getProgressDots(chapter.progress)" 
+                class="dot"
+                [class.filled]="dot === 1"
+                [class.partial]="chapter.progress === 3 && dot === 0">
+              </span>
+            </div>
+          </div>
+
+          <!-- Subsections -->
+          <div class="subsections" *ngIf="chapter.expanded && chapter.subsections.length > 0">
+            <div *ngFor="let subsection of chapter.subsections" class="subsection-item">
+              <div class="subsection-content">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" class="arrow-icon">
+                  <path d="M13 8L9 12L5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <span class="subsection-name">{{ subsection.name }}</span>
+              </div>
+              <div class="subsection-status">
+                <svg 
+                  *ngIf="subsection.status === 'completed'" 
+                  width="18" 
+                  height="18" 
+                  viewBox="0 0 18 18" 
+                  fill="none" 
+                  class="status-icon completed">
+                  <circle cx="9" cy="9" r="8" stroke="#4CAF50" stroke-width="1.5"/>
+                  <path d="M6 9L8 11L12 7" stroke="#4CAF50" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <svg 
+                  *ngIf="subsection.status === 'in-progress'" 
+                  width="15" 
+                  height="15" 
+                  viewBox="0 0 15 15" 
+                  fill="none" 
+                  class="status-icon in-progress">
+                  <circle cx="7.5" cy="7.5" r="6" stroke="#475569" stroke-width="1.5"/>
+                </svg>
+                <svg 
+                  *ngIf="subsection.status === 'not-started'" 
+                  width="16" 
+                  height="16" 
+                  viewBox="0 0 16 16" 
+                  fill="none" 
+                  class="status-icon not-started">
+                  <circle cx="8" cy="8" r="6" fill="#E0E0E0" opacity="0.3"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="chapter-divider" *ngIf="chapter !== chapters[chapters.length - 1]"></div>
+        </div>
+      </div>
+
+      <!-- Sources View (placeholder) -->
+      <div class="sources-list" *ngIf="activeTab === 'sources'">
+        <p class="placeholder-text">Sources content will appear here</p>
+      </div>
+    </div>
+  </div>
+</div>
