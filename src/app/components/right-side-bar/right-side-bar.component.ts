@@ -9,6 +9,18 @@ interface Tab {
   isActive: boolean;
 }
 
+interface FileAttachment {
+  name: string;
+  type: 'DOC' | 'PDF';
+  uploadDate: string;
+}
+
+interface Message {
+  content: string;
+  files?: FileAttachment[];
+  type: 'ai' | 'user';
+}
+
 @Component({
   selector: 'app-right-side-bar',
   imports: [CommonModule, FormsModule],
@@ -35,6 +47,33 @@ export class RightSideBarComponent {
     }
   ];
 
+  messages: Message[] = [
+    {
+      type: 'ai',
+      content: `The above summary was generated based on key insights synthesized from multiple sections of the AB Global Core Equity Research Report.
+
+The AI identified and consolidated recurring themes related to investment philosophy, valuation discipline, and risk management across several portions of the document to provide a concise, holistic takeaway.
+
+<strong>Summary Rationale</strong>
+After semantic cross-referencing and pattern clustering, the AI determined that the key takeaway sentence encapsulates the consistent narrative of the report:
+• "Disciplined investment approach" echoed across the Idea Generation and Process Overview sections.
+• "Long-term focus on cash-flow generative businesses" first introduced in the Philosophy section and reiterated in the Idea Generation segment.
+• "Valuation discipline and attention to downside risk" explicitly emphasized in the Risk Commentary section as a differentiator for the team's strategy.`,
+      files: [
+        {
+          name: 'DDQ 2024.docx',
+          type: 'DOC',
+          uploadDate: '20 Jan, 2025'
+        },
+        {
+          name: 'News Item.pdf',
+          type: 'PDF',
+          uploadDate: '20 Jan, 2025'
+        }
+      ]
+    }
+  ];
+
   switchTab(tabId: string) {
     this.activeTab = tabId;
     this.tabs.forEach(tab => {
@@ -57,6 +96,11 @@ export class RightSideBarComponent {
   onAttachFile() {
     console.log('Attach file clicked');
     // Handle file attachment logic here
+  }
+
+  onEditFile(file: FileAttachment) {
+    console.log('Edit file:', file.name);
+    // Handle file edit logic here
   }
 
   closePanel() {

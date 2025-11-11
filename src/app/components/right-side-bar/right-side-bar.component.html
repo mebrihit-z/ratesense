@@ -26,7 +26,46 @@
     <!-- Content area -->
     <div class="content-area">
       <div *ngIf="activeTab === 'ai-companion'" class="tab-content">
-        <!-- AI Companion content will go here -->
+        <!-- AI Companion Messages -->
+        <div class="messages-container">
+          <div *ngFor="let message of messages" class="message-wrapper">
+            <!-- User Avatar -->
+            <div class="message-avatar">
+              <img src="/icons/black-ai-icon.svg" alt="User" class="black-ai-icon">
+            </div>
+
+            <!-- Message Content -->
+            <div class="message-bubble">
+              <div class="message-text" [innerHTML]="message.content"></div>
+
+              <!-- File Attachments -->
+              <div *ngIf="message.files && message.files.length > 0" class="file-attachments">
+                <div *ngFor="let file of message.files" class="file-card">
+                  <div class="file-info">
+                    <div class="file-icon" [class.file-icon-doc]="file.type === 'DOC'" [class.file-icon-pdf]="file.type === 'PDF'">
+                      <span class="file-type-label">{{ file.type }}</span>
+                    </div>
+                    <div class="file-details">
+                      <p class="file-name">{{ file.name }}</p>
+                      <p class="file-date">Uploaded: {{ file.uploadDate }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Suggestion Prompt -->
+          <div class="suggestion-container">
+            <div class="suggestion-preview">
+              <div class="suggestion-icons">
+                <div class="mini-doc-icon doc-rotated-left"></div>
+                <div class="mini-doc-icon doc-rotated-right"></div>
+              </div>
+              <p class="suggestion-text">AB Core follows a disciplined investment approach that supports</p>
+            </div>
+          </div>
+        </div>
       </div>
       <div *ngIf="activeTab === 'comments'" class="tab-content">
         <!-- Comments content will go here -->
