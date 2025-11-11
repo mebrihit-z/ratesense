@@ -1,12 +1,17 @@
-<div class="sidebar-container">
-  <div class="sidebar-content">
+<div class="sidebar-container" [class.collapsed]="!isOpen">
+  <!-- Collapsed State Button -->
+  <button *ngIf="!isOpen" class="open-btn" (click)="toggleSidebar()" aria-label="Open sidebar">
+    <img src="/icons/left-panel-close.svg" alt="Open" class="open-icon">
+  </button>
+
+  <div class="sidebar-content" *ngIf="isOpen">
     <!-- Header -->
     <div class="sidebar-header">
       <div class="header-info">
         <h2 class="strategy-title">AB's US Equity Strategy</h2>
         <p class="strategy-subtitle">AB Global Core</p>
       </div>
-      <button class="close-btn" aria-label="Close sidebar">
+      <button class="close-btn" (click)="toggleSidebar()" aria-label="Close sidebar">
         <img src="/icons/right-panel-close.svg" alt="Close" class="close-icon">
       </button>
     </div>

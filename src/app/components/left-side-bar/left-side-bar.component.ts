@@ -27,6 +27,7 @@ interface Chapter {
   styleUrl: './left-side-bar.component.scss'
 })
 export class LeftSideBarComponent {
+  isOpen = true;
   activeTab: 'chapters' | 'sources' = 'chapters';
   sourcesCount = 4;
 
@@ -83,6 +84,10 @@ export class LeftSideBarComponent {
       ]
     }
   ];
+
+  toggleSidebar() {
+    this.isOpen = !this.isOpen;
+  }
 
   toggleTab(tab: 'chapters' | 'sources') {
     this.activeTab = tab;

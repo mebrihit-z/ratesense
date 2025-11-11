@@ -6,6 +6,17 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  position: relative;
+  transition: all 0.3s ease;
+
+  &.collapsed {
+    width: 48px;
+    min-width: 48px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 24px;
+  }
 }
 
 .sidebar-content {
@@ -15,6 +26,37 @@
   padding: 24px 16px;
   height: 100%;
   overflow: hidden;
+}
+
+// Open Button (Collapsed State)
+.open-btn {
+  width: 32px;
+  height: 32px;
+  padding: 6px;
+  background: white;
+  border: 1px solid #dfdfdf;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #f0f0f0;
+    border-color: #c0c0c0;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  .open-icon {
+    width: 20px;
+    height: 20px;
+    transform: rotate(180deg);
+  }
 }
 
 // Header

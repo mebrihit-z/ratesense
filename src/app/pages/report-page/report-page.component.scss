@@ -12,6 +12,11 @@
   app-left-side-bar {
     flex: 0 0 327px;
     overflow-y: auto;
+    transition: flex-basis 0.3s ease;
+
+    &:has(.sidebar-container.collapsed) {
+      flex: 0 0 48px;
+    }
   }
   
   app-report {
@@ -36,6 +41,10 @@
     app-right-side-bar {
       flex: 0 0 280px;
     }
+
+    app-left-side-bar:has(.sidebar-container.collapsed) {
+      flex: 0 0 48px;
+    }
   }
 }
 
@@ -49,6 +58,10 @@
     app-right-side-bar {
       flex: 0 0 250px;
     }
+
+    app-left-side-bar:has(.sidebar-container.collapsed) {
+      flex: 0 0 48px;
+    }
   }
 }
 
@@ -61,6 +74,10 @@
     app-left-side-bar,
     app-right-side-bar {
       flex: 0 0 200px;
+    }
+
+    app-left-side-bar:has(.sidebar-container.collapsed) {
+      flex: 0 0 48px;
     }
   }
 }
