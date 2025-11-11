@@ -42,8 +42,9 @@
               <div *ngIf="message.files && message.files.length > 0" class="file-attachments">
                 <div *ngFor="let file of message.files" class="file-card">
                   <div class="file-info">
-                    <div class="file-icon" [class.file-icon-doc]="file.type === 'DOC'" [class.file-icon-pdf]="file.type === 'PDF'">
-                      <span class="file-type-label">{{ file.type }}</span>
+                    <div class="file-icon-wrapper">
+                      <img *ngIf="file.type === 'DOC'" src="/icons/doc-icon.svg" alt="DOC File" class="file-icon-img">
+                      <img *ngIf="file.type === 'PDF'" src="/icons/pdf-icon.svg" alt="PDF File" class="file-icon-img">
                     </div>
                     <div class="file-details">
                       <p class="file-name">{{ file.name }}</p>
@@ -59,8 +60,8 @@
           <div class="suggestion-container">
             <div class="suggestion-preview">
               <div class="suggestion-icons">
-                <div class="mini-doc-icon doc-rotated-left"></div>
-                <div class="mini-doc-icon doc-rotated-right"></div>
+                <img src="/icons/doc-icon.svg" alt="DOC" class="suggestion-icon doc-rotated-left">
+                <img src="/icons/pdf-icon.svg" alt="PDF" class="suggestion-icon doc-rotated-right">
               </div>
               <p class="suggestion-text">AB Core follows a disciplined investment approach that supports</p>
             </div>
