@@ -1,180 +1,126 @@
 .navigation {
   position: relative;
-  width: 100%;
-  background: white;
-  border-bottom: 1px solid #dfdfdf;
-  height: 64px;
+  width: 64px;
+  height: 100%;
+  background: #e8e8e8;
+  border: 1px solid #dfdfdf;
   z-index: 100;
+  display: flex;
+  flex-direction: column;
 }
 
 .nav-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   height: 100%;
-  padding: 0 24px;
-  max-width: 1920px;
-  margin: 0 auto;
+  padding: 24px 16px;
 }
 
-// Brand Section
-.nav-brand {
+// Logo
+.nav-logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
   flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
 
-  .logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  &:hover {
+    transform: scale(1.05);
   }
 
-  .brand-name {
-    font-family: 'Inter', sans-serif;
-    font-size: 18px;
-    font-weight: 600;
-    color: #313131;
-    white-space: nowrap;
-  }
-}
-
-// Navigation Items
-.nav-items {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 1;
-  margin-left: 48px;
-
-  .nav-item {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    color: #525252;
-    padding: 8px 16px;
-    text-decoration: none;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-
-    &:hover {
-      background: #f6f6f6;
-      color: #313131;
-    }
-
-    &.active {
-      background: #f0f0f0;
-      color: #313131;
-      font-weight: 600;
-    }
+  svg {
+    width: 24px;
+    height: 24px;
   }
 }
 
 // Actions Section
 .nav-actions {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 24px;
   flex-shrink: 0;
-}
-
-// Search
-.search-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-
-  .search-icon {
-    position: absolute;
-    left: 12px;
-    color: #828282;
-    pointer-events: none;
-  }
-
-  .search-input {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    padding: 8px 12px 8px 38px;
-    border: 1px solid #dfdfdf;
-    border-radius: 8px;
-    outline: none;
-    width: 240px;
-    transition: all 0.2s ease;
-    background: #f6f6f6;
-
-    &::placeholder {
-      color: #828282;
-    }
-
-    &:focus {
-      border-color: #475569;
-      background: white;
-      width: 280px;
-    }
-  }
 }
 
 // Action Items
 .action-item {
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 
-.icon-btn,
-.user-btn {
+.action-btn {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 8px;
-  background: transparent;
-  border: none;
-  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: #fafafa;
+  border: 1px solid #dfdfdf;
+  border-radius: 50%;
   cursor: pointer;
   transition: all 0.2s ease;
-  color: #525252;
 
   &:hover {
-    background: #f6f6f6;
-    color: #313131;
+    transform: scale(1.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
   &.active {
-    background: #f0f0f0;
-    color: #313131;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   }
 
   .badge {
     position: absolute;
-    top: 4px;
-    right: 4px;
+    top: -2px;
+    right: -2px;
     background: #ef4444;
     color: white;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 600;
     padding: 2px 5px;
     border-radius: 10px;
     line-height: 1;
     min-width: 16px;
     text-align: center;
+    font-family: 'Inter', sans-serif;
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
   }
 }
 
-// Avatar
-.avatar {
+// User Avatar
+.user-avatar-btn {
+  background: #554BBD;
+  border-color: #554BBD;
+  overflow: hidden;
+
+  &:hover {
+    background: #4a3fa5;
+    border-color: #4a3fa5;
+  }
+}
+
+.user-avatar {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  width: 100%;
+  height: 100%;
   color: white;
   font-family: 'Inter', sans-serif;
   font-size: 12px;
   font-weight: 600;
-  flex-shrink: 0;
+  background: linear-gradient(135deg, #554BBD 0%, #6D5EDB 100%);
 
   &.large {
     width: 48px;
@@ -183,39 +129,38 @@
   }
 }
 
-.chevron {
-  color: inherit;
-  transition: transform 0.2s ease;
-
-  .active & {
-    transform: rotate(180deg);
-  }
-}
-
 // Dropdowns
 .dropdown {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  min-width: 280px;
+  position: fixed;
+  left: 76px;
+  min-width: 320px;
   background: white;
   border: 1px solid #dfdfdf;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   overflow: hidden;
   z-index: 1000;
-  animation: slideDown 0.2s ease;
+  animation: slideRight 0.2s ease;
 
-  @keyframes slideDown {
+  @keyframes slideRight {
     from {
       opacity: 0;
-      transform: translateY(-8px);
+      transform: translateX(-8px);
     }
     to {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateX(0);
     }
   }
+}
+
+.user-dropdown {
+  bottom: 16px;
+}
+
+.notifications-dropdown {
+  bottom: 76px;
+  max-width: 380px;
 }
 
 .dropdown-header {
@@ -229,7 +174,7 @@
     font-family: 'Inter', sans-serif;
     font-size: 16px;
     font-weight: 600;
-    color: #313131;
+    color: #171921;
     margin: 0;
   }
 
@@ -248,14 +193,14 @@
       font-family: 'Inter', sans-serif;
       font-size: 14px;
       font-weight: 600;
-      color: #313131;
+      color: #171921;
       margin: 0 0 4px 0;
     }
 
     p {
       font-family: 'Inter', sans-serif;
       font-size: 12px;
-      color: #828282;
+      color: #717376;
       margin: 0;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -266,7 +211,7 @@
 
 .dropdown-content {
   padding: 8px;
-  max-height: 320px;
+  max-height: 400px;
   overflow-y: auto;
 
   &::-webkit-scrollbar {
@@ -298,7 +243,7 @@
   align-items: center;
   gap: 12px;
   width: 100%;
-  padding: 10px 12px;
+  padding: 12px;
   background: transparent;
   border: none;
   border-radius: 8px;
@@ -306,11 +251,11 @@
   transition: all 0.2s ease;
   font-family: 'Inter', sans-serif;
   font-size: 14px;
-  color: #525252;
+  color: #171921;
   text-align: left;
 
   svg {
-    color: #828282;
+    color: #717376;
     flex-shrink: 0;
   }
 
@@ -320,10 +265,9 @@
 
   &:hover {
     background: #f6f6f6;
-    color: #313131;
 
     svg {
-      color: #525252;
+      color: #171921;
     }
   }
 
@@ -347,10 +291,6 @@
 }
 
 // Notifications
-.notifications-dropdown {
-  min-width: 360px;
-}
-
 .notification-item {
   display: flex;
   align-items: flex-start;
@@ -380,14 +320,15 @@
     .notification-message {
       font-family: 'Inter', sans-serif;
       font-size: 14px;
-      color: #313131;
+      color: #171921;
       margin: 0 0 4px 0;
+      line-height: 1.4;
     }
 
     .notification-time {
       font-family: 'Inter', sans-serif;
       font-size: 12px;
-      color: #828282;
+      color: #717376;
     }
   }
 }
@@ -399,15 +340,15 @@
   font-family: 'Inter', sans-serif;
   font-size: 12px;
   font-weight: 500;
-  color: #475569;
+  color: #554BBD;
   cursor: pointer;
   padding: 4px 8px;
-  border-radius: 4px;
+  border-radius: 6px;
   transition: all 0.2s ease;
 
   &:hover {
-    background: #f6f6f6;
-    color: #313131;
+    background: #f0f0f0;
+    color: #4a3fa5;
   }
 }
 
@@ -423,39 +364,64 @@
 
 // Responsive
 @media (max-width: 1024px) {
-  .nav-items {
-    margin-left: 24px;
-    gap: 4px;
+  .navigation {
+    width: 56px;
   }
 
-  .search-container .search-input {
-    width: 180px;
+  .nav-container {
+    padding: 20px 12px;
+  }
 
-    &:focus {
-      width: 220px;
+  .nav-logo svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .action-btn {
+    width: 32px;
+    height: 32px;
+
+    svg {
+      width: 20px;
+      height: 20px;
     }
+  }
+
+  .nav-actions {
+    gap: 20px;
   }
 }
 
 @media (max-width: 768px) {
+  .navigation {
+    width: 48px;
+  }
+
   .nav-container {
-    padding: 0 16px;
+    padding: 16px 8px;
   }
 
-  .nav-items {
-    display: none;
+  .nav-logo svg {
+    width: 18px;
+    height: 18px;
   }
 
-  .brand-name {
-    display: none;
-  }
+  .action-btn {
+    width: 28px;
+    height: 28px;
 
-  .search-container .search-input {
-    width: 140px;
-
-    &:focus {
-      width: 180px;
+    svg {
+      width: 18px;
+      height: 18px;
     }
   }
-}
 
+  .nav-actions {
+    gap: 16px;
+  }
+
+  .dropdown {
+    left: 56px;
+    min-width: 280px;
+  }
+}

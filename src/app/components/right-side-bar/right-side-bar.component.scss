@@ -1,0 +1,279 @@
+.right-sidebar-container {
+  height: 100%;
+  width: 100%;
+  background: white;
+  border-left: 1px solid #dfdfdf;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 16px;
+  gap: 16px;
+}
+
+// Header Section
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid transparent;
+
+  .tabs-container {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .tab {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    background: transparent;
+    border: none;
+    padding: 0 0 8px 0;
+    cursor: pointer;
+    position: relative;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    color: #525252;
+
+    .tab-icon {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+    }
+
+    span {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: normal;
+      white-space: nowrap;
+    }
+
+    &.active {
+      color: #525252;
+      border-bottom-color: #525252;
+
+      .tab-icon {
+        stroke: #525252;
+      }
+    }
+
+    &:not(.active) {
+      opacity: 0.3;
+
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  .close-btn {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #525252;
+    flex-shrink: 0;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+// Content Area
+.content-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f6f6f6;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #dfdfdf;
+    border-radius: 3px;
+
+    &:hover {
+      background: #c0c0c0;
+    }
+  }
+}
+
+.tab-content {
+  height: 100%;
+}
+
+// Input Section
+.input-section {
+  flex-shrink: 0;
+}
+
+.input-container {
+  background: #fafafa;
+  border: 1px solid #dfdfdf;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .message-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #525252;
+    padding: 0;
+    line-height: normal;
+
+    &::placeholder {
+      color: #525252;
+    }
+  }
+
+  .input-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .attach-btn {
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #525252;
+      transition: all 0.2s ease;
+
+      &:hover {
+        opacity: 0.7;
+      }
+
+      svg {
+        width: 24px;
+        height: 24px;
+        stroke: currentColor;
+      }
+    }
+
+    .send-btn {
+      width: 33px;
+      height: 33px;
+      padding: 0;
+      background: #525252;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+
+      &:hover {
+        background: #313131;
+        transform: scale(1.05);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 1024px) {
+  .sidebar-content {
+    padding: 12px;
+  }
+
+  .sidebar-header {
+    .tab {
+      span {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .input-container {
+    .message-input {
+      font-size: 14px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar-content {
+    padding: 8px;
+  }
+
+  .sidebar-header {
+    .tabs-container {
+      gap: 16px;
+    }
+
+    .tab {
+      gap: 1px;
+
+      span {
+        font-size: 13px;
+      }
+
+      .tab-icon {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+
+  .input-container {
+    padding: 12px;
+
+    .message-input {
+      font-size: 13px;
+    }
+
+    .input-actions {
+      .send-btn {
+        width: 28px;
+        height: 28px;
+
+        svg {
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+  }
+}
+
