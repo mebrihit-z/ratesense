@@ -1,0 +1,163 @@
+<div class="research-dashboard-container">
+  <div class="dashboard-header">
+    <div class="header-content">
+      <h1 class="dashboard-title">Research Dashboard</h1>
+      <p class="dashboard-subtitle">Manage and track your research projects</p>
+    </div>
+    <button class="btn-new-project" (click)="onCreateNewProject()">
+      <span class="btn-icon">+</span>
+      New Project
+    </button>
+  </div>
+
+  <!-- Stats Overview -->
+  <div class="stats-section">
+    <div class="stat-card">
+      <div class="stat-icon total-projects">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 3H5C3.89543 3 3 3.89543 3 5V9C3 10.1046 3.89543 11 5 11H9C10.1046 11 11 10.1046 11 9V5C11 3.89543 10.1046 3 9 3Z" stroke="currentColor" stroke-width="2"/>
+          <path d="M19 3H15C13.8954 3 13 3.89543 13 5V9C13 10.1046 13.8954 11 15 11H19C20.1046 11 21 10.1046 21 9V5C21 3.89543 20.1046 3 19 3Z" stroke="currentColor" stroke-width="2"/>
+          <path d="M9 13H5C3.89543 13 3 13.8954 3 15V19C3 20.1046 3.89543 21 5 21H9C10.1046 21 11 20.1046 11 19V15C11 13.8954 10.1046 13 9 13Z" stroke="currentColor" stroke-width="2"/>
+          <path d="M19 13H15C13.8954 13 13 13.8954 13 15V19C13 20.1046 13.8954 21 15 21H19C20.1046 21 21 20.1046 21 19V15C21 13.8954 20.1046 13 19 13Z" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-value">{{ stats.totalProjects }}</h3>
+        <p class="stat-label">Total Projects</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon active-projects">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-value">{{ stats.activeProjects }}</h3>
+        <p class="stat-label">Active Projects</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon total-documents">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="currentColor" stroke-width="2"/>
+          <path d="M14 2V8H20" stroke="currentColor" stroke-width="2"/>
+          <path d="M8 13H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M8 17H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-value">{{ stats.totalDocuments }}</h3>
+        <p class="stat-label">Documents</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon total-insights">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-value">{{ stats.totalInsights }}</h3>
+        <p class="stat-label">AI Insights</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="dashboard-content">
+    <!-- Projects Section -->
+    <div class="projects-section">
+      <div class="section-header">
+        <h2 class="section-title">Research Projects</h2>
+        <div class="filter-tabs">
+          <button class="filter-tab active">All</button>
+          <button class="filter-tab">Active</button>
+          <button class="filter-tab">Completed</button>
+        </div>
+      </div>
+
+      <div class="projects-grid">
+        <div 
+          *ngFor="let project of projects" 
+          class="project-card"
+          (click)="onProjectClick(project)">
+          <div class="project-header">
+            <div class="project-title-section">
+              <h3 class="project-title">{{ project.title }}</h3>
+              <span class="project-status" [ngClass]="getStatusClass(project.status)">
+                {{ project.status }}
+              </span>
+            </div>
+            <button class="project-menu-btn">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <circle cx="10" cy="4" r="1.5" fill="currentColor"/>
+                <circle cx="10" cy="10" r="1.5" fill="currentColor"/>
+                <circle cx="10" cy="16" r="1.5" fill="currentColor"/>
+              </svg>
+            </button>
+          </div>
+
+          <p class="project-description">{{ project.description }}</p>
+
+          <div class="project-progress">
+            <div class="progress-header">
+              <span class="progress-label">Progress</span>
+              <span class="progress-value">{{ project.progress }}%</span>
+            </div>
+            <div class="progress-bar">
+              <div 
+                class="progress-fill" 
+                [style.width.%]="project.progress"
+                [ngClass]="getStatusClass(project.status)">
+              </div>
+            </div>
+          </div>
+
+          <div class="project-footer">
+            <div class="project-stats">
+              <div class="stat-item">
+                <img src="/icons/doc-icon.svg" alt="Documents" class="stat-icon-img">
+                <span>{{ project.documents }} docs</span>
+              </div>
+              <div class="stat-item">
+                <img src="/icons/sparkle-icon.svg" alt="Insights" class="stat-icon-img">
+                <span>{{ project.insights }} insights</span>
+              </div>
+            </div>
+            <span class="project-updated">Updated {{ formatTime(project.lastUpdated) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activity Section -->
+    <div class="activity-section">
+      <div class="section-header">
+        <h2 class="section-title">Recent Activity</h2>
+        <button class="view-all-btn">View All</button>
+      </div>
+
+      <div class="activity-list">
+        <div *ngFor="let activity of recentActivities" class="activity-item">
+          <div class="activity-icon-wrapper">
+            <img [src]="getActivityIcon(activity.type)" alt="{{ activity.type }}" class="activity-icon">
+          </div>
+          <div class="activity-content">
+            <h4 class="activity-title">{{ activity.title }}</h4>
+            <p class="activity-description">{{ activity.description }}</p>
+            <div class="activity-meta">
+              <span class="activity-user">{{ activity.user }}</span>
+              <span class="activity-time">{{ formatTime(activity.timestamp) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
