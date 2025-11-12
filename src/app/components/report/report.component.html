@@ -23,6 +23,15 @@
     <!-- Toolbar -->
     <div class="toolbar">
       <div class="toolbar-left">
+        <!-- Comment button for preview mode -->
+        <div class="toolbar-group" *ngIf="inspectMode === 'preview'">
+          <button class="toolbar-comment-btn" title="Add Comment">
+            <img src="/icons/comment-icon.svg" alt="Comment" class="comment-icon">
+          </button>
+        </div>
+
+        <!-- Full toolbar for inspect/edit modes -->
+        <ng-container *ngIf="inspectMode !== 'preview'">
         <div class="toolbar-group">
           <button 
             class="toolbar-btn" 
@@ -120,6 +129,7 @@
         <div class="toolbar-group">
           <button class="toolbar-btn">💬</button>
         </div>
+        </ng-container>
       </div>
       <div class="inspect-dropdown">
         <button class="btn-inspect" (click)="toggleInspectDropdown()">
@@ -173,9 +183,10 @@
     <!-- Main Content -->
     <div class="main-content">
       <div class="content-wrapper">
+        <!-- Document Header -->
         <div class="document-header">
-          <span>Research Report</span>
-          <span>AB Global Core Equity</span>
+          <span class="header-label">Research Report</span>
+          <span class="header-value">AB Global Core Equity</span>
         </div>
 
         <!-- IDEA Generation Section -->
@@ -191,10 +202,10 @@
           </div>
         </div>
 
-        <!-- Key Takeaway -->
+        <!-- Key Takeaway Section -->
         <div class="section-container">
           <h3 class="section-heading">Key takeaway:</h3>
-          <div class="card">
+          <div class="card pros-cons-card">
             <button class="close-btn" aria-label="Remove">
               <img src="/icons/pros-cons-remove-icon.svg" alt="Close" class="remove-icon">
             </button>
@@ -214,7 +225,7 @@
             <div class="card-footer">
               <div class="card-meta">
                 <div class="meta-item">
-                  <img src="/icons/gray-ai-icon.svg" alt="AI" class="gray-ai-icon">
+                  <img src="/icons/gray-ai-icon.svg" alt="AI" class="meta-icon">
                   <span class="meta-text">by AI</span>
                 </div>
                 <div class="meta-item" *ngIf="keyTakeaway.sources">
@@ -238,12 +249,12 @@
           </div>
         </div>
 
-        <!-- Pros and Cons -->
+        <!-- Pros and Cons Section -->
         <div class="pros-cons-container">
           <!-- Pros Column -->
-          <div class="column">
+          <div class="column pros-column">
             <h3 class="section-heading">Pros:</h3>
-            <div class="card" *ngFor="let pro of pros; let i = index">
+            <div class="card pros-cons-card" *ngFor="let pro of pros; let i = index">
               <button class="close-btn" (click)="removeItem(pros, pro.id)" aria-label="Remove">
                 <img src="/icons/pros-cons-remove-icon.svg" alt="Close" class="remove-icon">
               </button>
@@ -265,8 +276,8 @@
               <div class="card-footer">
                 <div class="card-meta">
                   <div class="meta-item">
-                    <img *ngIf="pro.byAI" src="/icons/gray-ai-icon.svg" alt="AI" class="gray-ai-icon">
-                    <img *ngIf="!pro.byAI" src="/icons/by-user-icon.svg" alt="User" class="user-avatar">
+                    <img *ngIf="pro.byAI" src="/icons/gray-ai-icon.svg" alt="AI" class="meta-icon">
+                    <img *ngIf="!pro.byAI" src="/icons/by-user-icon.svg" alt="User" class="meta-icon">
                     <span class="meta-text">{{ pro.byAI ? 'by AI' : 'by' }}</span>
                   </div>
                   <div class="meta-item" *ngIf="pro.sources">
@@ -294,9 +305,9 @@
           </div>
 
           <!-- Cons Column -->
-          <div class="column">
+          <div class="column cons-column">
             <h3 class="section-heading">Cons:</h3>
-            <div class="card" *ngFor="let con of cons; let i = index">
+            <div class="card pros-cons-card" *ngFor="let con of cons; let i = index">
               <button class="close-btn" (click)="removeItem(cons, con.id)" aria-label="Remove">
                 <img src="/icons/pros-cons-remove-icon.svg" alt="Close" class="remove-icon">
               </button>
@@ -318,7 +329,7 @@
               <div class="card-footer">
                 <div class="card-meta">
                   <div class="meta-item">
-                    <img src="/icons/gray-ai-icon.svg" alt="AI" class="gray-ai-icon">
+                    <img src="/icons/gray-ai-icon.svg" alt="AI" class="meta-icon">
                     <span class="meta-text">by AI</span>
                   </div>
                   <div class="meta-item" *ngIf="con.sources">
