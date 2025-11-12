@@ -21,6 +21,14 @@ interface Message {
   type: 'ai' | 'user';
 }
 
+interface Comment {
+  id: string;
+  avatar: string;
+  quotedText: string;
+  commentText: string;
+  authorType: 'user' | 'self';
+}
+
 @Component({
   selector: 'app-right-side-bar',
   imports: [CommonModule, FormsModule],
@@ -71,6 +79,30 @@ After semantic cross-referencing and pattern clustering, the AI determined that 
           uploadDate: '20 Jan, 2025'
         }
       ]
+    }
+  ];
+
+  comments: Comment[] = [
+    {
+      id: '1',
+      avatar: 'avatar-1',
+      quotedText: "The balance of power in investment decisions does seem to lie in Dalgas'",
+      commentText: 'I believe this argument should be reinforced with relevant statistics.',
+      authorType: 'user'
+    },
+    {
+      id: '2',
+      avatar: 'avatar-1',
+      quotedText: 'The team applies sensible screens in order to narrow the universe',
+      commentText: 'I appreciate this direction. Could you please provide relevant examples to further substantiate it?',
+      authorType: 'user'
+    },
+    {
+      id: '3',
+      avatar: 'avatar-2',
+      quotedText: '',
+      commentText: 'I have incorporated the modifications based on your comments. Could you please review and confirm?',
+      authorType: 'self'
     }
   ];
 

@@ -68,8 +68,59 @@
           </div>
         </div>
       </div>
-      <div *ngIf="activeTab === 'comments'" class="tab-content">
-        <!-- Comments content will go here -->
+      <div *ngIf="activeTab === 'comments'" class="tab-content comments-tab">
+        <!-- Comments List -->
+        <div class="comments-container">
+          <div *ngFor="let comment of comments" class="comment-wrapper" [class.self-comment]="comment.authorType === 'self'">
+            <!-- User Comments (left-aligned with avatar) -->
+            <ng-container *ngIf="comment.authorType === 'user'">
+              <div class="comment-avatar">
+                <img src="/icons/user-avatar-yellow.svg" alt="User avatar" class="avatar-img">
+              </div>
+              <div class="comment-box-container">
+                <div class="comment-quoted-section" *ngIf="comment.quotedText">
+                  <img src="/icons/gray-comment-icon.svg" alt="Comment" class="quote-icon">
+                  <p class="quoted-text">{{ comment.quotedText }}</p>
+                </div>
+                <div class="comment-bubble-white">
+                  <p class="comment-text">{{ comment.commentText }}</p>
+                </div>
+              </div>
+            </ng-container>
+
+            <!-- Self Comments (right-aligned with avatar) -->
+            <ng-container *ngIf="comment.authorType === 'self'">
+              <div class="comment-box-container self">
+                <div class="comment-bubble-white self">
+                  <p class="comment-text">{{ comment.commentText }}</p>
+                </div>
+              </div>
+              <div class="comment-avatar">
+                <img src="/icons/user-avatar.svg" alt="User avatar" class="avatar-img">
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+        <!-- Add Comment Input -->
+        <div class="add-comment-section">
+          <div class="add-comment-input">
+            <p class="input-placeholder">Add a comment</p>
+            <div class="input-actions-row">
+              <button class="attach-btn-comment" aria-label="Attach file">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M16.5 6V17.5C16.5 19.71 14.71 21.5 12.5 21.5C10.29 21.5 8.5 19.71 8.5 17.5V5C8.5 3.62 9.62 2.5 11 2.5C12.38 2.5 13.5 3.62 13.5 5V15.5C13.5 16.05 13.05 16.5 12.5 16.5C11.95 16.5 11.5 16.05 11.5 15.5V6H10V15.5C10 16.88 11.12 18 12.5 18C13.88 18 15 16.88 15 15.5V5C15 2.79 13.21 1 11 1C8.79 1 7 2.79 7 5V17.5C7 20.54 9.46 23 12.5 23C15.54 23 18 20.54 18 17.5V6H16.5Z" fill="#717376"/>
+                </svg>
+              </button>
+              <button class="send-btn-comment" aria-label="Send comment">
+                <svg width="33" height="33" viewBox="0 0 33 33" fill="none">
+                  <circle cx="16.5" cy="16.5" r="16.5" fill="black"/>
+                  <path d="M16.5 11V22M16.5 11L12 15.5M16.5 11L21 15.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
