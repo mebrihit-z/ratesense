@@ -164,18 +164,6 @@
               <path d="M13 4L6 11L3 8" stroke="#0060ef" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
-          <button 
-            class="inspect-dropdown-item" 
-            [class.active]="inspectMode === 'comment'"
-            (click)="selectInspectMode('comment')">
-            <div class="inspect-dropdown-item-content">
-              <span>Edit</span>
-              <img src="/icons/edit-icon.svg" alt="Edit" class="item-icon">
-            </div>
-            <svg *ngIf="inspectMode === 'comment'" width="16" height="16" viewBox="0 0 16 16" fill="none" class="check-icon">
-              <path d="M13 4L6 11L3 8" stroke="#0060ef" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
         </div>
       </div>
     </div>
@@ -205,14 +193,14 @@
         <!-- Key Takeaway Section -->
         <div class="section-container">
           <h3 class="section-heading">Key takeaway:</h3>
-          <div class="card pros-cons-card">
-            <button class="close-btn" aria-label="Remove">
+          <div class="card pros-cons-card" [class.preview-mode]="inspectMode === 'preview'">
+            <button class="close-btn" *ngIf="inspectMode !== 'preview'" aria-label="Remove">
               <img src="/icons/pros-cons-remove-icon.svg" alt="Close" class="remove-icon">
             </button>
             <p 
               #editableKeyTakeaway
               class="card-text editable-text"
-              contenteditable="true"
+              [attr.contenteditable]="inspectMode !== 'preview'"
               (input)="onKeyTakeawayContentChange($event)"
               (focus)="onKeyTakeawayFocus(editableKeyTakeaway)"
               (blur)="onKeyTakeawayBlur(editableKeyTakeaway)"
@@ -250,18 +238,18 @@
         </div>
 
         <!-- Pros and Cons Section -->
-        <div class="pros-cons-container">
+        <div class="pros-cons-container" [class.preview-mode]="inspectMode === 'preview'">
           <!-- Pros Column -->
           <div class="column pros-column">
             <h3 class="section-heading">Pros:</h3>
-            <div class="card pros-cons-card" *ngFor="let pro of pros; let i = index">
-              <button class="close-btn" (click)="removeItem(pros, pro.id)" aria-label="Remove">
+            <div class="card pros-cons-card" [class.preview-mode]="inspectMode === 'preview'" *ngFor="let pro of pros; let i = index">
+              <button class="close-btn" *ngIf="inspectMode !== 'preview'" (click)="removeItem(pros, pro.id)" aria-label="Remove">
                 <img src="/icons/pros-cons-remove-icon.svg" alt="Close" class="remove-icon">
               </button>
               <ol class="card-list" [attr.start]="i + 1">
                 <li 
                   #editableItem
-                  contenteditable="true"
+                  [attr.contenteditable]="inspectMode !== 'preview'"
                   (input)="onProContentChange($event, pro)"
                   (focus)="onProFocus(pro.id, editableItem)"
                   (blur)="onProBlur(editableItem, pro)"
@@ -298,7 +286,7 @@
                 <div class="card-date">{{ pro.date }}</div>
               </div>
             </div>
-            <button class="btn-add" (click)="addPro()">
+            <button class="btn-add" *ngIf="inspectMode !== 'preview'" (click)="addPro()">
               <span class="add-icon">+</span>
               <span>Add</span>
             </button>
@@ -307,14 +295,14 @@
           <!-- Cons Column -->
           <div class="column cons-column">
             <h3 class="section-heading">Cons:</h3>
-            <div class="card pros-cons-card" *ngFor="let con of cons; let i = index">
-              <button class="close-btn" (click)="removeItem(cons, con.id)" aria-label="Remove">
+            <div class="card pros-cons-card" [class.preview-mode]="inspectMode === 'preview'" *ngFor="let con of cons; let i = index">
+              <button class="close-btn" *ngIf="inspectMode !== 'preview'" (click)="removeItem(cons, con.id)" aria-label="Remove">
                 <img src="/icons/pros-cons-remove-icon.svg" alt="Close" class="remove-icon">
               </button>
               <ol class="card-list" [attr.start]="i + 1">
                 <li 
                   #editableConItem
-                  contenteditable="true"
+                  [attr.contenteditable]="inspectMode !== 'preview'"
                   (input)="onConContentChange($event, con)"
                   (focus)="onConFocus(con.id, editableConItem)"
                   (blur)="onConBlur(editableConItem, con)"
@@ -351,7 +339,7 @@
                 <div class="card-date">{{ con.date }}</div>
               </div>
             </div>
-            <button class="btn-add" (click)="addCon()">
+            <button class="btn-add" *ngIf="inspectMode !== 'preview'" (click)="addCon()">
               <span class="add-icon">+</span>
               <span>Add</span>
             </button>

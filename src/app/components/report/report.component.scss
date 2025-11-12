@@ -554,6 +554,35 @@
     background: #fafafa;
   }
 
+  // Preview mode - clean document style
+  &.preview-mode {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin-bottom: 32px;
+    
+    &:hover {
+      box-shadow: none;
+      border-color: transparent;
+    }
+
+    .card-footer {
+      display: none;
+    }
+
+    .card-text,
+    .card-list {
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .card-text {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
   .close-btn {
     position: absolute;
     top: -6px;
@@ -608,13 +637,26 @@
       min-height: 1.5em;
       word-wrap: break-word;
 
-      &:hover {
-        background-color: rgba(0, 96, 239, 0.03);
+      &[contenteditable="true"] {
+        cursor: text;
+        
+        &:hover {
+          background-color: rgba(0, 96, 239, 0.03);
+        }
+
+        &:focus {
+          background-color: rgba(0, 96, 239, 0.05);
+          box-shadow: 0 0 0 3px rgba(0, 96, 239, 0.08);
+        }
       }
 
-      &:focus {
-        background-color: rgba(0, 96, 239, 0.05);
-        box-shadow: 0 0 0 3px rgba(0, 96, 239, 0.08);
+      &[contenteditable="false"] {
+        cursor: default;
+        pointer-events: none;
+        
+        &:hover {
+          background-color: transparent;
+        }
       }
 
       // Rich text formatting support
@@ -684,13 +726,26 @@
       min-height: 1.5em;
       word-wrap: break-word;
 
-      &:hover {
-        background-color: rgba(0, 96, 239, 0.03);
+      &[contenteditable="true"] {
+        cursor: text;
+        
+        &:hover {
+          background-color: rgba(0, 96, 239, 0.03);
+        }
+
+        &:focus {
+          background-color: rgba(0, 96, 239, 0.05);
+          box-shadow: 0 0 0 3px rgba(0, 96, 239, 0.08);
+        }
       }
 
-      &:focus {
-        background-color: rgba(0, 96, 239, 0.05);
-        box-shadow: 0 0 0 3px rgba(0, 96, 239, 0.08);
+      &[contenteditable="false"] {
+        cursor: default;
+        pointer-events: none;
+        
+        &:hover {
+          background-color: transparent;
+        }
       }
 
       &:empty:before {
@@ -817,6 +872,10 @@
   display: flex;
   gap: 32px;
   padding-bottom: 40px;
+
+  &.preview-mode {
+    gap: 64px;
+  }
 
   .column {
     flex: 1;

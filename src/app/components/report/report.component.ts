@@ -36,7 +36,7 @@ export class ReportComponent implements AfterViewInit {
   currentAlignment = 'left';
   
   // Inspect dropdown state
-  inspectMode: 'inspect' | 'preview' | 'comment' = 'inspect';
+  inspectMode: 'inspect' | 'preview' = 'inspect';
   isInspectDropdownOpen = false;
 
   @ViewChildren('editableItem') editableProItems!: QueryList<ElementRef>;
@@ -250,11 +250,14 @@ export class ReportComponent implements AfterViewInit {
 
   onProFocus(proId: number, element: HTMLElement) {
     console.log('Focus on pro:', proId);
-    this.editingProId = proId;
-    this.editingConId = null;
-    this.editingKeyTakeaway = false;
-    this.currentEditingElement = element;
-    this.updateToolbarState();
+    // Only allow editing if not in preview mode
+    if (this.inspectMode !== 'preview') {
+      this.editingProId = proId;
+      this.editingConId = null;
+      this.editingKeyTakeaway = false;
+      this.currentEditingElement = element;
+      this.updateToolbarState();
+    }
   }
 
   onConContentChange(event: Event, con: ReportItem) {
@@ -277,11 +280,14 @@ export class ReportComponent implements AfterViewInit {
 
   onConFocus(conId: number, element: HTMLElement) {
     console.log('Focus on con:', conId);
-    this.editingConId = conId;
-    this.editingProId = null;
-    this.editingKeyTakeaway = false;
-    this.currentEditingElement = element;
-    this.updateToolbarState();
+    // Only allow editing if not in preview mode
+    if (this.inspectMode !== 'preview') {
+      this.editingConId = conId;
+      this.editingProId = null;
+      this.editingKeyTakeaway = false;
+      this.currentEditingElement = element;
+      this.updateToolbarState();
+    }
   }
 
   onKeyTakeawayContentChange(event: Event) {
@@ -292,11 +298,14 @@ export class ReportComponent implements AfterViewInit {
 
   onKeyTakeawayFocus(element: HTMLElement) {
     console.log('Focus on key takeaway');
-    this.editingKeyTakeaway = true;
-    this.editingProId = null;
-    this.editingConId = null;
-    this.currentEditingElement = element;
-    this.updateToolbarState();
+    // Only allow editing if not in preview mode
+    if (this.inspectMode !== 'preview') {
+      this.editingKeyTakeaway = true;
+      this.editingProId = null;
+      this.editingConId = null;
+      this.currentEditingElement = element;
+      this.updateToolbarState();
+    }
   }
 
   onKeyTakeawayBlur(element: HTMLElement) {
@@ -448,10 +457,12 @@ export class ReportComponent implements AfterViewInit {
 
   onEditableClick(event: MouseEvent, element: HTMLElement) {
     console.log('Editable clicked');
-    // Ensure contenteditable is true and set as current editing element
-    element.setAttribute('contenteditable', 'true');
-    this.currentEditingElement = element;
-    this.updateToolbarState();
+    // Only allow editing if not in preview mode
+    if (this.inspectMode !== 'preview') {
+      element.setAttribute('contenteditable', 'true');
+      this.currentEditingElement = element;
+      this.updateToolbarState();
+    }
   }
 
   onKeyDown(event: KeyboardEvent) {
@@ -491,7 +502,7 @@ export class ReportComponent implements AfterViewInit {
     this.isInspectDropdownOpen = !this.isInspectDropdownOpen;
   }
 
-  selectInspectMode(mode: 'inspect' | 'preview' | 'comment') {
+  selectInspectMode(mode: 'inspect' | 'preview') {
     this.inspectMode = mode;
     this.isInspectDropdownOpen = false;
     console.log('Inspect mode changed to:', mode);
@@ -510,8 +521,6 @@ export class ReportComponent implements AfterViewInit {
         return 'Inspect';
       case 'preview':
         return 'Preview';
-      case 'comment':
-        return 'Edit';
       default:
         return 'Inspect';
     }
@@ -523,8 +532,6 @@ export class ReportComponent implements AfterViewInit {
         return '/icons/inspect-icon.svg';
       case 'preview':
         return '/icons/preview-icon.svg';
-      case 'comment':
-        return '/icons/edit-icon.svg';
       default:
         return '/icons/inspect-icon.svg';
     }
