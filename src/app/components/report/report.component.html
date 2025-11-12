@@ -115,11 +115,11 @@
           <!-- Pros Column -->
           <div class="column">
             <h3 class="section-heading">Pros:</h3>
-            <div class="card" *ngFor="let pro of pros">
+            <div class="card" *ngFor="let pro of pros; let i = index">
               <button class="close-btn" (click)="removeItem(pros, pro.id)" aria-label="Remove">
                 <img src="/icons/pros-cons-remove-icon.svg" alt="Close" class="remove-icon">
               </button>
-              <ol class="card-list" start="1">
+              <ol class="card-list" [attr.start]="i + 1">
                 <li>{{ pro.text }}</li>
               </ol>
               <div class="card-footer">
@@ -152,11 +152,11 @@
           <!-- Cons Column -->
           <div class="column">
             <h3 class="section-heading">Cons:</h3>
-            <div class="card" *ngFor="let con of cons">
+            <div class="card" *ngFor="let con of cons; let i = index">
               <button class="close-btn" (click)="removeItem(cons, con.id)" aria-label="Remove">
                 <img src="/icons/pros-cons-remove-icon.svg" alt="Close" class="remove-icon">
               </button>
-              <ol class="card-list" start="1">
+              <ol class="card-list" [attr.start]="i + 1">
                 <li>{{ con.text }}</li>
               </ol>
               <div class="card-footer">
