@@ -332,13 +332,13 @@
   object-fit: contain;
   
   &.doc-rotated-left {
-    transform: rotate(-9.335deg);
+    transform: rotate(-30deg);
     left: 0;
     z-index: 1;
   }
   
   &.doc-rotated-right {
-    transform: rotate(8.032deg);
+    transform: rotate(30deg);
     left: 6px;
     z-index: 2;
   }
