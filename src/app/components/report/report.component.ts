@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2, ElementRef, AfterViewInit, QueryList, ViewChildren } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface ReportItem {
@@ -17,7 +17,79 @@ interface ReportItem {
   templateUrl: './report.component.html',
   styleUrl: './report.component.scss'
 })
-export class ReportComponent {
+export class ReportComponent implements AfterViewInit {
+  editingProId: number | null = null;
+  editingConId: number | null = null;
+  editingKeyTakeaway: boolean = false;
+  currentEditingElement: HTMLElement | null = null;
+  private initializedProItems = new Set<number>();
+  private initializedConItems = new Set<number>();
+  private keyTakeawayInitialized = false;
+
+  // Toolbar state
+  isBold = false;
+  isItalic = false;
+  isUnderline = false;
+  isStrikethrough = false;
+  currentAlignment = 'left';
+
+  @ViewChildren('editableItem') editableProItems!: QueryList<ElementRef>;
+  @ViewChildren('editableConItem') editableConItems!: QueryList<ElementRef>;
+  @ViewChildren('editableKeyTakeaway') editableKeyTakeawayElement!: QueryList<ElementRef>;
+
+  constructor() {}
+
+  ngAfterViewInit() {
+    // Set initial HTML content for all items
+    this.initializeEditableContent();
+    
+    // Watch for changes (like when adding new items)
+    this.editableProItems.changes.subscribe(() => {
+      this.initializeProContent();
+    });
+    
+    this.editableConItems.changes.subscribe(() => {
+      this.initializeConContent();
+    });
+
+    this.editableKeyTakeawayElement.changes.subscribe(() => {
+      this.initializeKeyTakeawayContent();
+    });
+  }
+
+  private initializeEditableContent() {
+    this.initializeProContent();
+    this.initializeConContent();
+    this.initializeKeyTakeawayContent();
+  }
+
+  private initializeProContent() {
+    this.editableProItems.forEach((item, index) => {
+      const pro = this.pros[index];
+      if (pro && !this.initializedProItems.has(pro.id)) {
+        item.nativeElement.innerHTML = pro.text;
+        this.initializedProItems.add(pro.id);
+      }
+    });
+  }
+
+  private initializeConContent() {
+    this.editableConItems.forEach((item, index) => {
+      const con = this.cons[index];
+      if (con && !this.initializedConItems.has(con.id)) {
+        item.nativeElement.innerHTML = con.text;
+        this.initializedConItems.add(con.id);
+      }
+    });
+  }
+
+  private initializeKeyTakeawayContent() {
+    if (this.editableKeyTakeawayElement && this.editableKeyTakeawayElement.first && !this.keyTakeawayInitialized) {
+      const element = this.editableKeyTakeawayElement.first.nativeElement;
+      element.innerHTML = this.keyTakeaway.text;
+      this.keyTakeawayInitialized = true;
+    }
+  }
   keyTakeaway = {
     text: "AB Core follows a disciplined investment approach that supports the team's clear philosophy with its long-term focus on cash-flow generative businesses. The valuation discipline and attention to downside risk strengthen this offering.",
     byAI: true,
@@ -66,14 +138,269 @@ export class ReportComponent {
     const index = items.findIndex(item => item.id === id);
     if (index > -1) {
       items.splice(index, 1);
+      // Clean up from both tracking sets
+      this.initializedProItems.delete(id);
+      this.initializedConItems.delete(id);
     }
   }
 
   addPro() {
-    console.log('Add pro clicked');
+    const newId = Math.max(...this.pros.map(p => p.id), 0) + 1;
+    const today = new Date();
+    const formattedDate = `${today.getDate()} ${today.toLocaleString('default', { month: 'short' })} ${today.getFullYear()}`;
+    
+    this.pros.push({
+      id: newId,
+      text: 'New pro item...',
+      byAI: false,
+      date: formattedDate
+    });
+
+    // Focus the new item after it's rendered
+    setTimeout(() => {
+      const items = this.editableProItems.toArray();
+      const lastItem = items[this.pros.length - 1];
+      if (lastItem) {
+        const element = lastItem.nativeElement;
+        element.focus();
+        // Select all text
+        const range = document.createRange();
+        range.selectNodeContents(element);
+        const selection = window.getSelection();
+        if (selection) {
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+      }
+    }, 150);
   }
 
   addCon() {
-    console.log('Add con clicked');
+    const newId = Math.max(...this.cons.map(c => c.id), ...this.pros.map(p => p.id), 0) + 1;
+    const today = new Date();
+    const formattedDate = `${today.getDate()} ${today.toLocaleString('default', { month: 'short' })} ${today.getFullYear()}`;
+    
+    this.cons.push({
+      id: newId,
+      text: 'New con item...',
+      byAI: false,
+      date: formattedDate
+    });
+
+    // Focus the new item after it's rendered
+    setTimeout(() => {
+      const items = this.editableConItems.toArray();
+      const lastItem = items[this.cons.length - 1];
+      if (lastItem) {
+        const element = lastItem.nativeElement;
+        element.focus();
+        // Select all text
+        const range = document.createRange();
+        range.selectNodeContents(element);
+        const selection = window.getSelection();
+        if (selection) {
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+      }
+    }, 150);
+  }
+
+  onProContentChange(event: Event, pro: ReportItem) {
+    const target = event.target as HTMLElement;
+    pro.text = target.innerHTML;
+    console.log('Pro content changed:', pro.text);
+  }
+
+  onProFocus(proId: number, element: HTMLElement) {
+    console.log('Focus on pro:', proId);
+    this.editingProId = proId;
+    this.editingConId = null;
+    this.editingKeyTakeaway = false;
+    this.currentEditingElement = element;
+    this.updateToolbarState();
+  }
+
+  onConContentChange(event: Event, con: ReportItem) {
+    const target = event.target as HTMLElement;
+    con.text = target.innerHTML;
+    console.log('Con content changed:', con.text);
+  }
+
+  onConFocus(conId: number, element: HTMLElement) {
+    console.log('Focus on con:', conId);
+    this.editingConId = conId;
+    this.editingProId = null;
+    this.editingKeyTakeaway = false;
+    this.currentEditingElement = element;
+    this.updateToolbarState();
+  }
+
+  onKeyTakeawayContentChange(event: Event) {
+    const target = event.target as HTMLElement;
+    this.keyTakeaway.text = target.innerHTML;
+    console.log('Key takeaway content changed:', this.keyTakeaway.text);
+  }
+
+  onKeyTakeawayFocus(element: HTMLElement) {
+    console.log('Focus on key takeaway');
+    this.editingKeyTakeaway = true;
+    this.editingProId = null;
+    this.editingConId = null;
+    this.currentEditingElement = element;
+    this.updateToolbarState();
+  }
+
+  onKeyTakeawayBlur(element: HTMLElement) {
+    console.log('Blur on key takeaway, saving content');
+    // Save the final content
+    this.keyTakeaway.text = element.innerHTML;
+    this.editingKeyTakeaway = false;
+    
+    // Delay clearing to allow toolbar clicks
+    setTimeout(() => {
+      this.currentEditingElement = null;
+    }, 200);
+  }
+
+  onSelectionChange() {
+    if (this.currentEditingElement) {
+      this.updateToolbarState();
+    }
+  }
+
+  updateToolbarState() {
+    // Update toolbar buttons to reflect current formatting
+    this.isBold = document.queryCommandState('bold');
+    this.isItalic = document.queryCommandState('italic');
+    this.isUnderline = document.queryCommandState('underline');
+    this.isStrikethrough = document.queryCommandState('strikeThrough');
+    
+    // Check alignment
+    if (document.queryCommandState('justifyLeft')) {
+      this.currentAlignment = 'left';
+    } else if (document.queryCommandState('justifyCenter')) {
+      this.currentAlignment = 'center';
+    } else if (document.queryCommandState('justifyRight')) {
+      this.currentAlignment = 'right';
+    }
+  }
+
+  onProBlur(element: HTMLElement, pro: ReportItem) {
+    console.log('Blur on pro, saving content');
+    // Save the final content
+    pro.text = element.innerHTML;
+    this.editingProId = null;
+    
+    // Delay clearing to allow toolbar clicks
+    setTimeout(() => {
+      this.currentEditingElement = null;
+    }, 200);
+  }
+
+  onConBlur(element: HTMLElement, con: ReportItem) {
+    console.log('Blur on con, saving content');
+    // Save the final content
+    con.text = element.innerHTML;
+    this.editingConId = null;
+    
+    // Delay clearing to allow toolbar clicks
+    setTimeout(() => {
+      this.currentEditingElement = null;
+    }, 200);
+  }
+
+  applyFormat(command: string, value?: string) {
+    console.log('Applying format:', command, 'to element:', this.currentEditingElement);
+    if (this.currentEditingElement) {
+      this.currentEditingElement.focus();
+      // Small delay to ensure focus is set
+      setTimeout(() => {
+        const result = document.execCommand(command, false, value);
+        console.log('execCommand result:', result);
+        this.currentEditingElement?.focus();
+        
+        // Update toolbar state after applying format
+        setTimeout(() => this.updateToolbarState(), 10);
+      }, 0);
+    } else {
+      console.warn('No editing element found');
+    }
+  }
+
+  // Additional formatting commands
+  insertLink() {
+    const url = prompt('Enter URL:');
+    if (url) {
+      this.applyFormat('createLink', url);
+    }
+  }
+
+  removeFormat() {
+    this.applyFormat('removeFormat');
+  }
+
+  changeFontSize(size: string) {
+    this.applyFormat('fontSize', size);
+  }
+
+  changeTextColor(color: string) {
+    this.applyFormat('foreColor', color);
+  }
+
+  changeBackgroundColor(color: string) {
+    this.applyFormat('hiliteColor', color);
+  }
+
+  undo() {
+    this.applyFormat('undo');
+  }
+
+  redo() {
+    this.applyFormat('redo');
+  }
+
+  onToolbarMouseDown(event: MouseEvent) {
+    console.log('Toolbar button mousedown');
+    event.preventDefault();
+  }
+
+  onEditableClick(event: MouseEvent, element: HTMLElement) {
+    console.log('Editable clicked');
+    // Ensure contenteditable is true
+    element.setAttribute('contenteditable', 'true');
+  }
+
+  onKeyDown(event: KeyboardEvent) {
+    // Handle keyboard shortcuts
+    if (event.ctrlKey || event.metaKey) {
+      switch (event.key.toLowerCase()) {
+        case 'b':
+          event.preventDefault();
+          this.applyFormat('bold');
+          break;
+        case 'i':
+          event.preventDefault();
+          this.applyFormat('italic');
+          break;
+        case 'u':
+          event.preventDefault();
+          this.applyFormat('underline');
+          break;
+        case 'z':
+          if (event.shiftKey) {
+            event.preventDefault();
+            this.redo();
+          } else {
+            event.preventDefault();
+            this.undo();
+          }
+          break;
+        case 'y':
+          event.preventDefault();
+          this.redo();
+          break;
+      }
+    }
   }
 }

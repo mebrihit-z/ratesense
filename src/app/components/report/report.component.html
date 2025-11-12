@@ -24,25 +24,98 @@
     <div class="toolbar">
       <div class="toolbar-left">
         <div class="toolbar-group">
-          <button class="toolbar-btn">B</button>
-          <button class="toolbar-btn">I</button>
-          <button class="toolbar-btn">U</button>
-          <button class="toolbar-btn">S</button>
-        </div>
-        <div class="toolbar-group font-size">
-          <span>16</span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M4 6L8 2L12 6M4 10L8 14L12 10" stroke="currentColor" stroke-width="1.5"/>
-          </svg>
+          <button 
+            class="toolbar-btn" 
+            [class.active]="isBold"
+            (mousedown)="onToolbarMouseDown($event)" 
+            (click)="applyFormat('bold')" 
+            title="Bold (Ctrl+B)">B</button>
+          <button 
+            class="toolbar-btn"
+            [class.active]="isItalic"
+            (mousedown)="onToolbarMouseDown($event)" 
+            (click)="applyFormat('italic')" 
+            title="Italic (Ctrl+I)">I</button>
+          <button 
+            class="toolbar-btn"
+            [class.active]="isUnderline"
+            (mousedown)="onToolbarMouseDown($event)" 
+            (click)="applyFormat('underline')" 
+            title="Underline (Ctrl+U)">U</button>
+          <button 
+            class="toolbar-btn"
+            [class.active]="isStrikethrough"
+            (mousedown)="onToolbarMouseDown($event)" 
+            (click)="applyFormat('strikeThrough')" 
+            title="Strikethrough">S</button>
         </div>
         <div class="toolbar-group">
-          <button class="toolbar-btn">≡</button>
-          <button class="toolbar-btn">≣</button>
-          <button class="toolbar-btn">≡</button>
+          <button 
+            class="toolbar-btn"
+            (mousedown)="onToolbarMouseDown($event)" 
+            (click)="undo()" 
+            title="Undo (Ctrl+Z)">↶</button>
+          <button 
+            class="toolbar-btn"
+            (mousedown)="onToolbarMouseDown($event)" 
+            (click)="redo()" 
+            title="Redo (Ctrl+Y)">↷</button>
         </div>
         <div class="toolbar-group">
-          <button class="toolbar-btn">•</button>
-          <button class="toolbar-btn">1.</button>
+          <button 
+            class="toolbar-btn"
+            [class.active]="currentAlignment === 'left'"
+            (mousedown)="onToolbarMouseDown($event)" 
+            (click)="applyFormat('justifyLeft')" 
+            title="Align Left">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M2 3h12M2 6h8M2 9h12M2 12h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <button 
+            class="toolbar-btn"
+            [class.active]="currentAlignment === 'center'"
+            (mousedown)="onToolbarMouseDown($event)" 
+            (click)="applyFormat('justifyCenter')" 
+            title="Align Center">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M2 3h12M4 6h8M2 9h12M4 12h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <button 
+            class="toolbar-btn"
+            [class.active]="currentAlignment === 'right'"
+            (mousedown)="onToolbarMouseDown($event)" 
+            (click)="applyFormat('justifyRight')" 
+            title="Align Right">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M2 3h12M6 6h8M2 9h12M6 12h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="toolbar-group">
+          <button 
+            class="toolbar-btn"
+            (mousedown)="onToolbarMouseDown($event)" 
+            (click)="applyFormat('insertUnorderedList')" 
+            title="Bullet List">•</button>
+          <button 
+            class="toolbar-btn"
+            (mousedown)="onToolbarMouseDown($event)" 
+            (click)="applyFormat('insertOrderedList')" 
+            title="Numbered List">1.</button>
+        </div>
+        <div class="toolbar-group">
+          <button 
+            class="toolbar-btn"
+            (mousedown)="onToolbarMouseDown($event)" 
+            (click)="insertLink()" 
+            title="Insert Link">🔗</button>
+          <button 
+            class="toolbar-btn"
+            (mousedown)="onToolbarMouseDown($event)" 
+            (click)="removeFormat()" 
+            title="Clear Formatting">✖</button>
         </div>
         <div class="toolbar-group">
           <button class="toolbar-btn">💬</button>
@@ -82,7 +155,19 @@
             <button class="close-btn" aria-label="Remove">
               <img src="/icons/pros-cons-remove-icon.svg" alt="Close" class="remove-icon">
             </button>
-            <p class="card-text">{{ keyTakeaway.text }}</p>
+            <p 
+              #editableKeyTakeaway
+              class="card-text editable-text"
+              contenteditable="true"
+              (input)="onKeyTakeawayContentChange($event)"
+              (focus)="onKeyTakeawayFocus(editableKeyTakeaway)"
+              (blur)="onKeyTakeawayBlur(editableKeyTakeaway)"
+              (click)="onEditableClick($event, editableKeyTakeaway)"
+              (keyup)="onSelectionChange()"
+              (mouseup)="onSelectionChange()"
+              (keydown)="onKeyDown($event)"
+              spellcheck="true"
+            ></p>
             <div class="card-footer">
               <div class="card-meta">
                 <div class="meta-item">
@@ -120,7 +205,19 @@
                 <img src="/icons/pros-cons-remove-icon.svg" alt="Close" class="remove-icon">
               </button>
               <ol class="card-list" [attr.start]="i + 1">
-                <li>{{ pro.text }}</li>
+                <li 
+                  #editableItem
+                  contenteditable="true"
+                  (input)="onProContentChange($event, pro)"
+                  (focus)="onProFocus(pro.id, editableItem)"
+                  (blur)="onProBlur(editableItem, pro)"
+                  (click)="onEditableClick($event, editableItem)"
+                  (keyup)="onSelectionChange()"
+                  (mouseup)="onSelectionChange()"
+                  (keydown)="onKeyDown($event)"
+                  class="editable-content"
+                  spellcheck="true"
+                ></li>
               </ol>
               <div class="card-footer">
                 <div class="card-meta">
@@ -147,6 +244,10 @@
                 <div class="card-date">{{ pro.date }}</div>
               </div>
             </div>
+            <button class="btn-add" (click)="addPro()">
+              <span class="add-icon">+</span>
+              <span>Add</span>
+            </button>
           </div>
 
           <!-- Cons Column -->
@@ -157,7 +258,19 @@
                 <img src="/icons/pros-cons-remove-icon.svg" alt="Close" class="remove-icon">
               </button>
               <ol class="card-list" [attr.start]="i + 1">
-                <li>{{ con.text }}</li>
+                <li 
+                  #editableConItem
+                  contenteditable="true"
+                  (input)="onConContentChange($event, con)"
+                  (focus)="onConFocus(con.id, editableConItem)"
+                  (blur)="onConBlur(editableConItem, con)"
+                  (click)="onEditableClick($event, editableConItem)"
+                  (keyup)="onSelectionChange()"
+                  (mouseup)="onSelectionChange()"
+                  (keydown)="onKeyDown($event)"
+                  class="editable-content"
+                  spellcheck="true"
+                ></li>
               </ol>
               <div class="card-footer">
                 <div class="card-meta">

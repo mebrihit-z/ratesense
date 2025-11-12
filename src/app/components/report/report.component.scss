@@ -211,10 +211,60 @@
     cursor: pointer;
     font-size: 16px;
     color: #475569;
+    transition: all 0.15s ease;
+    user-select: none;
+    border-radius: 4px;
+    position: relative;
 
     &:hover {
       background: #e2e8f0;
-      border-radius: 4px;
+    }
+
+    &:active {
+      background: #cbd5e1;
+      transform: scale(0.95);
+    }
+
+    // Active state - when formatting is applied
+    &.active {
+      background: #0060ef;
+      color: #ffffff;
+      
+      &:hover {
+        background: #0052d1;
+      }
+
+      svg path {
+        stroke: #ffffff;
+      }
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+      
+      path {
+        stroke: currentColor;
+      }
+    }
+  }
+
+  // Style specific formatting buttons
+  .toolbar-group:first-child {
+    .toolbar-btn:nth-child(1) {
+      font-weight: 700; // Bold B
+    }
+
+    .toolbar-btn:nth-child(2) {
+      font-style: italic; // Italic I
+    }
+
+    .toolbar-btn:nth-child(3) {
+      text-decoration: underline; // Underlined U
+    }
+
+    .toolbar-btn:nth-child(4) {
+      text-decoration: line-through; // Strikethrough S
     }
   }
 
@@ -362,6 +412,62 @@
     color: #171921;
     line-height: 1.5;
     margin: 0;
+
+    &.editable-text {
+      outline: none;
+      cursor: text;
+      padding: 4px 8px;
+      margin: -4px -8px;
+      border-radius: 4px;
+      transition: background-color 0.2s ease;
+      min-height: 1.5em;
+      word-wrap: break-word;
+
+      &:hover {
+        background-color: rgba(0, 96, 239, 0.05);
+      }
+
+      &:focus {
+        background-color: rgba(0, 96, 239, 0.08);
+        box-shadow: 0 0 0 2px rgba(0, 96, 239, 0.1);
+      }
+
+      // Rich text formatting support
+      strong, b {
+        font-weight: 700;
+      }
+
+      em, i {
+        font-style: italic;
+      }
+
+      u {
+        text-decoration: underline;
+      }
+
+      strike, s, del {
+        text-decoration: line-through;
+      }
+
+      a {
+        color: #0060ef;
+        text-decoration: underline;
+        cursor: pointer;
+        
+        &:hover {
+          color: #0052d1;
+        }
+      }
+
+      // Handle nested lists
+      ul, ol {
+        margin: 8px 0;
+        padding-left: 20px;
+      }
+
+      // Preserve whitespace and line breaks
+      white-space: pre-wrap;
+    }
   }
 
   .card-list {
@@ -375,6 +481,74 @@
 
     li {
       margin-bottom: 0;
+    }
+
+    .editable-content {
+      outline: none;
+      cursor: text;
+      padding: 4px 8px;
+      margin: -4px -8px;
+      border-radius: 4px;
+      transition: background-color 0.2s ease;
+      min-height: 1.5em;
+      word-wrap: break-word;
+
+      &:hover {
+        background-color: rgba(0, 96, 239, 0.05);
+      }
+
+      &:focus {
+        background-color: rgba(0, 96, 239, 0.08);
+        box-shadow: 0 0 0 2px rgba(0, 96, 239, 0.1);
+      }
+
+      &:empty:before {
+        content: attr(data-placeholder);
+        color: #909090;
+        font-style: italic;
+      }
+
+      // Rich text formatting support
+      strong, b {
+        font-weight: 700;
+      }
+
+      em, i {
+        font-style: italic;
+      }
+
+      u {
+        text-decoration: underline;
+      }
+
+      strike, s, del {
+        text-decoration: line-through;
+      }
+
+      a {
+        color: #0060ef;
+        text-decoration: underline;
+        cursor: pointer;
+        
+        &:hover {
+          color: #0052d1;
+        }
+      }
+
+      // Handle nested lists
+      ul, ol {
+        margin: 8px 0;
+        padding-left: 20px;
+      }
+
+      // Preserve whitespace and line breaks
+      white-space: pre-wrap;
+
+      // Handle keyboard shortcuts hint
+      &::after {
+        content: '';
+        display: block;
+      }
     }
   }
 
