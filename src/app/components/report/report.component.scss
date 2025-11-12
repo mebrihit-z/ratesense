@@ -16,7 +16,42 @@
   gap: 16px;
   min-width: 0;
 }
+.gray-ai-icon{
+  width: 16px;
+  height: 16px;
+}
+.suggestion-icon{
+  width: 13px;
+  height: 17px;
+}
+.suggestion-icons {
+  display: flex;
+  gap: 0;
+  flex-shrink: 0;
+  position: relative;
+  width: 20px;
+  height: 16px;
+  margin-right: 0;
+}
 
+.suggestion-icon {
+  width: 12.67px;
+  height: 16.91px;
+  position: absolute;
+  object-fit: contain;
+  
+  &.doc-rotated-left {
+    transform: rotate(-30deg);
+    left: 0;
+    z-index: 1;
+  }
+  
+  &.doc-rotated-right {
+    transform: rotate(30deg);
+    left: 6px;
+    z-index: 2;
+  }
+}
 // Header
 .report-header {
   display: flex;
@@ -221,7 +256,7 @@
 
 .content-wrapper {
   flex: 1;
-  padding: 64px;
+  padding: 32px 64px;
   box-sizing: border-box;
 }
 
@@ -233,13 +268,13 @@
   font-size: 13.5px;
   font-weight: 500;
   color: #171921;
-  margin-bottom: 16px;
+  // margin-bottom: 16px;
 }
 
 // IDEA Generation Section
 .idea-section {
   padding: 20px;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 
   .idea-header {
     display: flex;

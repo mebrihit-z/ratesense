@@ -56,7 +56,7 @@ export class ReportComponent {
       id: 4,
       text: 'The balance of power in investment decisions does seem to lie in Dalgas\' hands and we view him as the guardian of the approach. Although low, there is an element of key-man risk in the strategy. Similarly, we would review the rating if Ingemann left.',
       byAI: true,
-      sources: 1,
+      sources: 2,
       score: 'medium',
       date: '20 Oct 2025'
     }

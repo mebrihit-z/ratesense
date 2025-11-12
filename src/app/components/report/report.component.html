@@ -86,11 +86,14 @@
             <div class="card-footer">
               <div class="card-meta">
                 <div class="meta-item">
-                  <span class="ai-icon">🤖</span>
+                  <img src="/icons/gray-ai-icon.svg" alt="AI" class="gray-ai-icon">
                   <span class="meta-text">by AI</span>
                 </div>
                 <div class="meta-item" *ngIf="keyTakeaway.sources">
-                  <span class="source-icon">📄</span>
+                  <div class="suggestion-icons">
+                    <img src="/icons/doc-icon.svg" alt="DOC" class="suggestion-icon doc-rotated-left">
+                    <img src="/icons/pdf-icon.svg" alt="PDF" class="suggestion-icon doc-rotated-right">
+                  </div>
                   <span class="meta-text">{{ keyTakeaway.sources }} Sources</span>
                 </div>
                 <div class="meta-item" *ngIf="keyTakeaway.score">
@@ -120,12 +123,12 @@
               <div class="card-footer">
                 <div class="card-meta">
                   <div class="meta-item">
-                    <span *ngIf="pro.byAI" class="ai-icon">🤖</span>
-                    <span *ngIf="!pro.byAI" class="avatar">👤</span>
+                    <img *ngIf="pro.byAI" src="/icons/gray-ai-icon.svg" alt="AI" class="gray-ai-icon">
+                    <img *ngIf="!pro.byAI" src="/icons/by-user-icon.svg" alt="User" class="user-avatar">
                     <span class="meta-text">{{ pro.byAI ? 'by AI' : 'by' }}</span>
                   </div>
                   <div class="meta-item" *ngIf="pro.sources">
-                    <span class="source-icon">📄</span>
+                    <img src="/icons/pdf-icon.svg" alt="DOC" class="suggestion-icon">
                     <span class="meta-text">{{ pro.sources }} Source{{ pro.sources > 1 ? 's' : '' }}</span>
                   </div>
                   <div class="meta-item" *ngIf="pro.score">
@@ -153,11 +156,14 @@
               <div class="card-footer">
                 <div class="card-meta">
                   <div class="meta-item">
-                    <span class="ai-icon">🤖</span>
+                    <img src="/icons/gray-ai-icon.svg" alt="AI" class="gray-ai-icon">
                     <span class="meta-text">by AI</span>
                   </div>
                   <div class="meta-item" *ngIf="con.sources">
-                    <span class="source-icon">📄</span>
+                    <div class="suggestion-icons">
+                      <img src="/icons/doc-icon.svg" alt="DOC" class="suggestion-icon doc-rotated-left">
+                      <img src="/icons/pdf-icon.svg" alt="PDF" class="suggestion-icon doc-rotated-right">
+                    </div>
                     <span class="meta-text">{{ con.sources }} Source{{ con.sources > 1 ? 's' : '' }}</span>
                   </div>
                   <div class="meta-item" *ngIf="con.score">
