@@ -123,7 +123,7 @@
   color: #171921;
   cursor: pointer;
   display: flex;
-  gap: 4px;
+  gap: 6.67px;
   align-items: center;
   width: 120px;
   justify-content: center;
@@ -336,8 +336,8 @@
     position: absolute;
     top: -5px;
     right: -5px;
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     background: #ffffff;
     border: 1px solid #dfdfdf;
     border-radius: 50%;
@@ -444,6 +444,7 @@
 .pros-cons-container {
   display: flex;
   gap: 23px;
+  padding-bottom: 40px;
 
   .column {
     flex: 1;
@@ -452,7 +453,10 @@
     gap: 16px;
   }
 }
-
+.remove-icon{
+  width: 16px;
+  height: 16px;
+}
 // Add Button
 .btn-add {
   background: #fafafa;
