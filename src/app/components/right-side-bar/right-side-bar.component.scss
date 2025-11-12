@@ -163,6 +163,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  padding-bottom: 0;
 }
 
 .message-wrapper {
@@ -294,22 +295,24 @@
 }
 
 
-// Suggestion Container
-.suggestion-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-}
-
-.suggestion-preview {
+// Suggestion and Input Wrapper (Fixed at bottom)
+.suggestion-and-input-wrapper {
   background: #f3f3f3;
   border: 1px solid #dfdfdf;
   border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.suggestion-preview {
   padding: 16px;
   display: flex;
   gap: 4px;
   align-items: center;
+  border-bottom: none;
 }
 
 .suggestion-icons {
@@ -319,6 +322,7 @@
   position: relative;
   width: 20px;
   height: 16px;
+  margin-right: 0;
 }
 
 .suggestion-icon {
@@ -328,13 +332,13 @@
   object-fit: contain;
   
   &.doc-rotated-left {
-    transform: rotate(-30deg);
+    transform: rotate(-9.335deg);
     left: 0;
     z-index: 1;
   }
   
   &.doc-rotated-right {
-    transform: rotate(30deg);
+    transform: rotate(8.032deg);
     left: 6px;
     z-index: 2;
   }
@@ -351,6 +355,100 @@
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: normal;
+}
+
+// White Input Container (nested inside suggestion wrapper)
+.input-container-white {
+  background: #fafafa;
+  border: 1px solid #dfdfdf;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+}
+
+.ask-followup-chip {
+  background: #f6f6f6;
+  border: 1px solid #dfdfdf;
+  border-radius: 8px;
+  padding: 9px 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+
+  .chip-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: #525252;
+    margin: 0;
+    line-height: normal;
+  }
+}
+
+// Input actions within white container
+.input-container-white {
+  .input-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .attach-btn {
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #525252;
+      transition: all 0.2s ease;
+
+      &:hover {
+        opacity: 0.7;
+      }
+
+      .attach-icon {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    .send-btn {
+      width: 33px;
+      height: 33px;
+      padding: 0;
+      background: #000;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+
+      &:hover {
+        background: #313131;
+        transform: scale(1.05);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+
+      .send-icon {
+        width: 20px;
+        height: 20px;
+        transform: rotate(180deg);
+      }
+    }
+  }
 }
 
 
@@ -515,7 +613,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding-bottom: 16px;
+  padding-bottom: 0;
 }
 
 .comments-container {
@@ -525,7 +623,7 @@
   gap: 16px;
   flex: 1;
   overflow-y: auto;
-  margin-bottom: 16px;
+  margin-bottom: 0;
 
   &::-webkit-scrollbar {
     width: 6px;
@@ -550,10 +648,6 @@
   gap: 8px;
   align-items: flex-start;
   width: 100%;
-
-  &.self-comment {
-    // flex-direction: row-reverse;
-  }
 }
 
 .comment-avatar {

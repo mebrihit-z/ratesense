@@ -24,8 +24,8 @@
     </div>
 
     <!-- Content area -->
-    <div class="content-area">
-      <div *ngIf="activeTab === 'ai-companion'" class="tab-content">
+    <div class="content-area" *ngIf="activeTab === 'ai-companion'">
+      <div class="tab-content">
         <!-- AI Companion Messages -->
         <div class="messages-container">
           <div *ngFor="let message of messages" class="message-wrapper">
@@ -56,20 +56,37 @@
               </div>
             </div>
           </div>
-
-          <!-- Suggestion Prompt -->
-          <div class="suggestion-container">
-            <div class="suggestion-preview">
-              <div class="suggestion-icons">
-                <img src="/icons/doc-icon.svg" alt="DOC" class="suggestion-icon doc-rotated-left">
-                <img src="/icons/pdf-icon.svg" alt="PDF" class="suggestion-icon doc-rotated-right">
-              </div>
-              <p class="suggestion-text">AB Core follows a disciplined investment approach that supports</p>
-            </div>
-          </div>
         </div>
       </div>
-      <div *ngIf="activeTab === 'comments'" class="tab-content comments-tab">
+    </div>
+
+    <!-- Suggestion Prompt with Input Container (AI Companion fixed bottom) -->
+    <div class="suggestion-and-input-wrapper" *ngIf="activeTab === 'ai-companion'">
+      <div class="suggestion-preview">
+        <div class="suggestion-icons">
+          <img src="/icons/doc-icon.svg" alt="DOC" class="suggestion-icon doc-rotated-left">
+          <img src="/icons/pdf-icon.svg" alt="PDF" class="suggestion-icon doc-rotated-right">
+        </div>
+        <p class="suggestion-text">AB Core follows a disciplined investment approach that supports</p>
+      </div>
+      <div class="input-container-white">
+        <div class="ask-followup-chip">
+          <p class="chip-text">Ask a follow-up?</p>
+        </div>
+        <div class="input-actions">
+          <button class="attach-btn" (click)="onAttachFile()" aria-label="Attach file">
+            <img src="/icons/attach-icon.svg" alt="Attach" class="attach-icon">
+          </button>
+          <button class="send-btn" (click)="onSendMessage()" aria-label="Send message">
+            <img src="/icons/send-icon.svg" alt="Send" class="send-icon">
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content area for Comments -->
+    <div class="content-area" *ngIf="activeTab === 'comments'">
+      <div class="tab-content comments-tab">
         <!-- Comments List -->
         <div class="comments-container">
           <div *ngFor="let comment of comments" class="comment-wrapper" [class.self-comment]="comment.authorType === 'self'">
@@ -102,18 +119,16 @@
             </ng-container>
           </div>
         </div>
-
-        <!-- Add Comment Input -->
       </div>
     </div>
 
-    <!-- Input section -->
-    <div class="input-section">
+    <!-- Input section for Comments Tab -->
+    <div class="input-section" *ngIf="activeTab === 'comments'">
       <div class="input-container">
         <input 
           type="text" 
           class="message-input" 
-          [placeholder]="activeTab === 'ai-companion' ? 'Type Something' : 'Add a comment'"
+          placeholder="Add a comment"
           [(ngModel)]="userInput"
           (keyup.enter)="onSendMessage()">
         <div class="input-actions">
@@ -121,9 +136,7 @@
             <img src="/icons/attach-icon.svg" alt="Attach" class="attach-icon">
           </button>
           <button class="send-btn" (click)="onSendMessage()" aria-label="Send message">
-            <img [src]="activeTab === 'ai-companion' ? '/icons/send-icon.svg' : '/icons/white-up-arrow-icon.svg'" 
-                 [alt]="activeTab === 'ai-companion' ? 'Send' : 'Send Comment'" 
-                 class="send-icon">
+            <img src="/icons/white-up-arrow-icon.svg" alt="Send Comment" class="send-icon">
           </button>
         </div>
       </div>
