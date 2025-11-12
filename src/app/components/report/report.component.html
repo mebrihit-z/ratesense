@@ -121,10 +121,53 @@
           <button class="toolbar-btn">💬</button>
         </div>
       </div>
-      <button class="btn-inspect">
-        Inspect
-        <img src="/icons/inspect-icon.svg" alt="Inspect" class="inspect-icon">
-      </button>
+      <div class="inspect-dropdown">
+        <button class="btn-inspect" (click)="toggleInspectDropdown()">
+          <span>{{ getInspectModeLabel() }}</span>
+          <img [src]="getInspectModeIcon()" [alt]="getInspectModeLabel()" class="inspect-icon">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" class="dropdown-arrow" [class.open]="isInspectDropdownOpen">
+            <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="inspect-dropdown-menu" *ngIf="isInspectDropdownOpen">
+          <button 
+            class="inspect-dropdown-item" 
+            [class.active]="inspectMode === 'inspect'"
+            (click)="selectInspectMode('inspect')">
+            <div class="inspect-dropdown-item-content">
+              <span>Inspect</span>
+              <img src="/icons/inspect-icon.svg" alt="Inspect" class="item-icon">
+            </div>
+            <svg *ngIf="inspectMode === 'inspect'" width="16" height="16" viewBox="0 0 16 16" fill="none" class="check-icon">
+              <path d="M13 4L6 11L3 8" stroke="#0060ef" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button 
+            class="inspect-dropdown-item" 
+            [class.active]="inspectMode === 'preview'"
+            (click)="selectInspectMode('preview')">
+            <div class="inspect-dropdown-item-content">
+              <span>Preview</span>
+              <img src="/icons/preview-icon.svg" alt="Preview" class="item-icon">
+            </div>
+            <svg *ngIf="inspectMode === 'preview'" width="16" height="16" viewBox="0 0 16 16" fill="none" class="check-icon">
+              <path d="M13 4L6 11L3 8" stroke="#0060ef" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button 
+            class="inspect-dropdown-item" 
+            [class.active]="inspectMode === 'comment'"
+            (click)="selectInspectMode('comment')">
+            <div class="inspect-dropdown-item-content">
+              <span>Edit</span>
+              <img src="/icons/edit-icon.svg" alt="Edit" class="item-icon">
+            </div>
+            <svg *ngIf="inspectMode === 'comment'" width="16" height="16" viewBox="0 0 16 16" fill="none" class="check-icon">
+              <path d="M13 4L6 11L3 8" stroke="#0060ef" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Main Content -->

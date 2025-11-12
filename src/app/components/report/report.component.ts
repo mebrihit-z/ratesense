@@ -1,4 +1,4 @@
-import { Component, Renderer2, ElementRef, AfterViewInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, Renderer2, ElementRef, AfterViewInit, QueryList, ViewChildren, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface ReportItem {
@@ -34,12 +34,26 @@ export class ReportComponent implements AfterViewInit {
   isUnderline = false;
   isStrikethrough = false;
   currentAlignment = 'left';
+  
+  // Inspect dropdown state
+  inspectMode: 'inspect' | 'preview' | 'comment' = 'inspect';
+  isInspectDropdownOpen = false;
 
   @ViewChildren('editableItem') editableProItems!: QueryList<ElementRef>;
   @ViewChildren('editableConItem') editableConItems!: QueryList<ElementRef>;
   @ViewChildren('editableKeyTakeaway') editableKeyTakeawayElement!: QueryList<ElementRef>;
 
-  constructor() {}
+  constructor(private elementRef: ElementRef) {}
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const clickedInsideInspect = this.elementRef.nativeElement.querySelector('.inspect-dropdown')?.contains(target);
+    
+    if (!clickedInsideInspect && this.isInspectDropdownOpen) {
+      this.closeInspectDropdown();
+    }
+  }
 
   ngAfterViewInit() {
     // Set initial HTML content for all items
@@ -470,6 +484,49 @@ export class ReportComponent implements AfterViewInit {
           this.redo();
           break;
       }
+    }
+  }
+
+  toggleInspectDropdown() {
+    this.isInspectDropdownOpen = !this.isInspectDropdownOpen;
+  }
+
+  selectInspectMode(mode: 'inspect' | 'preview' | 'comment') {
+    this.inspectMode = mode;
+    this.isInspectDropdownOpen = false;
+    console.log('Inspect mode changed to:', mode);
+    
+    // You can add additional logic here based on the selected mode
+    // For example, trigger different views or behaviors
+  }
+
+  closeInspectDropdown() {
+    this.isInspectDropdownOpen = false;
+  }
+
+  getInspectModeLabel(): string {
+    switch (this.inspectMode) {
+      case 'inspect':
+        return 'Inspect';
+      case 'preview':
+        return 'Preview';
+      case 'comment':
+        return 'Edit';
+      default:
+        return 'Inspect';
+    }
+  }
+
+  getInspectModeIcon(): string {
+    switch (this.inspectMode) {
+      case 'inspect':
+        return '/icons/inspect-icon.svg';
+      case 'preview':
+        return '/icons/preview-icon.svg';
+      case 'comment':
+        return '/icons/edit-icon.svg';
+      default:
+        return '/icons/inspect-icon.svg';
     }
   }
 }
