@@ -293,8 +293,10 @@ export class ReportComponent implements AfterViewInit {
     
     // Delay clearing to allow toolbar clicks
     setTimeout(() => {
-      this.currentEditingElement = null;
-    }, 200);
+      if (this.currentEditingElement === element) {
+        this.currentEditingElement = null;
+      }
+    }, 300);
   }
 
   onSelectionChange() {
@@ -328,8 +330,10 @@ export class ReportComponent implements AfterViewInit {
     
     // Delay clearing to allow toolbar clicks
     setTimeout(() => {
-      this.currentEditingElement = null;
-    }, 200);
+      if (this.currentEditingElement === element) {
+        this.currentEditingElement = null;
+      }
+    }, 300);
   }
 
   onConBlur(element: HTMLElement, con: ReportItem) {
@@ -340,33 +344,60 @@ export class ReportComponent implements AfterViewInit {
     
     // Delay clearing to allow toolbar clicks
     setTimeout(() => {
-      this.currentEditingElement = null;
-    }, 200);
+      if (this.currentEditingElement === element) {
+        this.currentEditingElement = null;
+      }
+    }, 300);
   }
 
   applyFormat(command: string, value?: string) {
     console.log('Applying format:', command, 'to element:', this.currentEditingElement);
-    if (this.currentEditingElement) {
-      this.currentEditingElement.focus();
-      // Small delay to ensure focus is set
-      setTimeout(() => {
-        const result = document.execCommand(command, false, value);
-        console.log('execCommand result:', result);
-        this.currentEditingElement?.focus();
-        
-        // Update toolbar state after applying format
-        setTimeout(() => this.updateToolbarState(), 10);
-      }, 0);
-    } else {
+    
+    if (!this.currentEditingElement) {
       console.warn('No editing element found');
+      return;
+    }
+
+    // Store reference to avoid null issues
+    const element = this.currentEditingElement;
+    
+    // Ensure element is focused
+    element.focus();
+    
+    // Apply the formatting command
+    try {
+      const result = document.execCommand(command, false, value);
+      console.log('execCommand result:', result);
+      
+      // Keep focus on the element
+      element.focus();
+      
+      // Update toolbar state to reflect changes
+      setTimeout(() => this.updateToolbarState(), 10);
+    } catch (error) {
+      console.error('Error applying format:', error);
     }
   }
 
   // Additional formatting commands
   insertLink() {
+    if (!this.currentEditingElement) {
+      console.warn('No editing element found');
+      return;
+    }
+    
+    // Store the current element before showing prompt
+    const element = this.currentEditingElement;
     const url = prompt('Enter URL:');
+    
     if (url) {
+      // Restore the editing element and focus
+      this.currentEditingElement = element;
+      element.focus();
       this.applyFormat('createLink', url);
+    } else {
+      // Restore focus even if cancelled
+      element.focus();
     }
   }
 
@@ -396,13 +427,17 @@ export class ReportComponent implements AfterViewInit {
 
   onToolbarMouseDown(event: MouseEvent) {
     console.log('Toolbar button mousedown');
+    // Prevent the mousedown from causing blur on the contenteditable element
     event.preventDefault();
+    event.stopPropagation();
   }
 
   onEditableClick(event: MouseEvent, element: HTMLElement) {
     console.log('Editable clicked');
-    // Ensure contenteditable is true
+    // Ensure contenteditable is true and set as current editing element
     element.setAttribute('contenteditable', 'true');
+    this.currentEditingElement = element;
+    this.updateToolbarState();
   }
 
   onKeyDown(event: KeyboardEvent) {
