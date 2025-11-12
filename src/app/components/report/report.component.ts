@@ -25,6 +25,8 @@ export class ReportComponent implements AfterViewInit {
   private initializedProItems = new Set<number>();
   private initializedConItems = new Set<number>();
   private keyTakeawayInitialized = false;
+  private newlyAddedProIds = new Set<number>();
+  private newlyAddedConIds = new Set<number>();
 
   // Toolbar state
   isBold = false;
@@ -138,9 +140,11 @@ export class ReportComponent implements AfterViewInit {
     const index = items.findIndex(item => item.id === id);
     if (index > -1) {
       items.splice(index, 1);
-      // Clean up from both tracking sets
+      // Clean up from all tracking sets
       this.initializedProItems.delete(id);
       this.initializedConItems.delete(id);
+      this.newlyAddedProIds.delete(id);
+      this.newlyAddedConIds.delete(id);
     }
   }
 
@@ -156,6 +160,9 @@ export class ReportComponent implements AfterViewInit {
       date: formattedDate
     });
 
+    // Mark this as a newly added item
+    this.newlyAddedProIds.add(newId);
+
     // Focus the new item after it's rendered
     setTimeout(() => {
       const items = this.editableProItems.toArray();
@@ -163,7 +170,7 @@ export class ReportComponent implements AfterViewInit {
       if (lastItem) {
         const element = lastItem.nativeElement;
         element.focus();
-        // Select all text
+        // Select all text so it gets replaced when user types
         const range = document.createRange();
         range.selectNodeContents(element);
         const selection = window.getSelection();
@@ -187,6 +194,9 @@ export class ReportComponent implements AfterViewInit {
       date: formattedDate
     });
 
+    // Mark this as a newly added item
+    this.newlyAddedConIds.add(newId);
+
     // Focus the new item after it's rendered
     setTimeout(() => {
       const items = this.editableConItems.toArray();
@@ -194,7 +204,7 @@ export class ReportComponent implements AfterViewInit {
       if (lastItem) {
         const element = lastItem.nativeElement;
         element.focus();
-        // Select all text
+        // Select all text so it gets replaced when user types
         const range = document.createRange();
         range.selectNodeContents(element);
         const selection = window.getSelection();
@@ -208,6 +218,18 @@ export class ReportComponent implements AfterViewInit {
 
   onProContentChange(event: Event, pro: ReportItem) {
     const target = event.target as HTMLElement;
+    
+    // If this is a newly added item and user is typing for the first time
+    if (this.newlyAddedProIds.has(pro.id)) {
+      // Clear the placeholder text
+      const currentText = target.innerText.trim();
+      if (currentText === 'New pro item...') {
+        target.innerHTML = '';
+      }
+      // Remove from newly added set since user has started editing
+      this.newlyAddedProIds.delete(pro.id);
+    }
+    
     pro.text = target.innerHTML;
     console.log('Pro content changed:', pro.text);
   }
@@ -223,6 +245,18 @@ export class ReportComponent implements AfterViewInit {
 
   onConContentChange(event: Event, con: ReportItem) {
     const target = event.target as HTMLElement;
+    
+    // If this is a newly added item and user is typing for the first time
+    if (this.newlyAddedConIds.has(con.id)) {
+      // Clear the placeholder text
+      const currentText = target.innerText.trim();
+      if (currentText === 'New con item...') {
+        target.innerHTML = '';
+      }
+      // Remove from newly added set since user has started editing
+      this.newlyAddedConIds.delete(con.id);
+    }
+    
     con.text = target.innerHTML;
     console.log('Con content changed:', con.text);
   }
